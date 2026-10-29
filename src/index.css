@@ -1,0 +1,139 @@
+@import 'tailwindcss';
+
+/* Couleurs : mode clair par défaut, mode sombre selon le réglage du téléphone. */
+:root {
+  --fond: #f4f4f1;
+  --surface: #ffffff;
+  --surface-2: #ebebe6;
+  --texte: #15171c;
+  --texte-2: #5a5f6a;
+  --bord: rgb(21 23 28 / 0.09);
+  --accent: #2348d8;
+  --accent-texte: #ffffff;
+  --garder: #1d7448;
+  --pause: #935600;
+  --couper: #c0292b;
+  --partager: #6b3fc8;
+  --verre: rgb(255 255 255 / 0.92);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond: #0c0d10;
+    --surface: #17191e;
+    --surface-2: #23262d;
+    --texte: #f2f3f5;
+    --texte-2: #a3a8b3;
+    --bord: rgb(255 255 255 / 0.09);
+    --accent: #87a0ff;
+    --accent-texte: #0c0d10;
+    --garder: #5ccf92;
+    --pause: #f2b453;
+    --couper: #ff8078;
+    --partager: #b9a0ff;
+    --verre: rgb(23 25 30 / 0.92);
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-fond: var(--fond);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-texte: var(--texte);
+  --color-texte-2: var(--texte-2);
+  --color-bord: var(--bord);
+  --color-accent: var(--accent);
+  --color-accent-texte: var(--accent-texte);
+  --color-garder: var(--garder);
+  --color-pause: var(--pause);
+  --color-couper: var(--couper);
+  --color-partager: var(--partager);
+  --color-verre: var(--verre);
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--texte);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Les boutons réagissent tout de suite au toucher, sans délai. */
+button,
+a,
+label,
+summary,
+[role='button'] {
+  touch-action: manipulation;
+}
+
+button {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Champ de saisie à 16 px minimum : sinon iOS zoome la page. */
+input,
+select,
+textarea {
+  font-size: max(1rem, 16px);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Retour immédiat à l'appui. */
+.appui {
+  transition: transform 120ms ease-out, background-color 150ms ease, border-color 150ms ease;
+}
+.appui:active {
+  transform: scale(0.97);
+}
+
+/* Matériau translucide pour les barres flottantes. */
+.verre {
+  background: var(--verre);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .verre {
+    background: var(--surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --bord: var(--texte-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .appui:active {
+    transform: none;
+  }
+}
+
+/* Défilement horizontal sans barre visible (filtres par catégorie). */
+.sans-barre {
+  scrollbar-width: none;
+}
+.sans-barre::-webkit-scrollbar {
+  display: none;
+}
