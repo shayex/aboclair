@@ -92,3 +92,11 @@ describe('saisie des montants', () => {
     expect(centimesVersSaisie(1200)).toBe('12,00')
   })
 })
+
+describe('normaliser (recherche)', async () => {
+  const { normaliser } = await import('./format')
+  it('ignore accents, majuscules et type d’apostrophe', () => {
+    expect(normaliser('L’Équipe')).toBe("l'equipe")
+    expect(normaliser("l'equipe")).toBe("l'equipe")
+  })
+})

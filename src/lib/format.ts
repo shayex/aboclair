@@ -26,8 +26,8 @@ export function formaterDate(iso: string): string {
 export function normaliser(texte: string): string {
   return texte
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/[’‘]/g, "'")
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[\u2018\u2019]/g, "'")
     .toLowerCase()
     .trim()
 }
