@@ -87,6 +87,9 @@ export function logoHtml(nom: string): string {
   if (logo.type === 'icone') {
     return `<span class="logo-marque" style="background:${logo.fond}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="${logo.glyphe}"><path d="${logo.chemin}"/></svg></span>`
   }
+  if (logo.type === 'image') {
+    return `<span class="logo-marque image" aria-hidden="true"><img src="../../${logo.fichier}" alt="" /></span>`
+  }
   return `<span class="logo-marque initiales" style="--teinte:${logo.teinte}" aria-hidden="true">${echapper(logo.lettres)}</span>`
 }
 
@@ -220,6 +223,8 @@ tr:last-child td{border-bottom:0}
 .titre h1{margin:0}
 .logo-marque{flex:none;display:grid;place-items:center;width:3.25rem;height:3.25rem;border-radius:.9rem;box-shadow:inset 0 0 0 1px rgb(0 0 0/.06)}
 .logo-marque svg{width:1.8rem;height:1.8rem}
+.logo-marque.image{background:#fff;overflow:hidden}
+.logo-marque.image img{width:100%;height:100%;object-fit:contain}
 .initiales{font-weight:700;font-size:1.2rem;background:hsl(var(--teinte) 60% 92%);color:hsl(var(--teinte) 55% 30%)}
 @media (prefers-color-scheme:dark){.initiales{background:hsl(var(--teinte) 30% 24%);color:hsl(var(--teinte) 70% 82%)}.logo-marque{box-shadow:inset 0 0 0 1px rgb(255 255 255/.1)}}
 `

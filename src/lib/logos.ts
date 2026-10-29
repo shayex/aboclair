@@ -30,6 +30,7 @@ import {
   siYoutubemusic,
   type SimpleIcon,
 } from 'simple-icons'
+import imagesRecuperees from '../data/logos.json'
 
 export const ICONES: Record<string, SimpleIcon> = {
   Netflix: siNetflix,
@@ -58,8 +59,12 @@ export const ICONES: Record<string, SimpleIcon> = {
   'Box Orange (Livebox)': siOrange,
 }
 
+/** Logos récupérés sur les sites des marques (workflow « Récupérer les logos »), servis par le site. */
+const IMAGES = imagesRecuperees as Record<string, { fichier: string; source: string }>
+
 export type Logo =
   | { type: 'icone'; chemin: string; fond: string; glyphe: string }
+  | { type: 'image'; fichier: string; lettres: string; teinte: number }
   | { type: 'initiales'; lettres: string; teinte: number }
 
 /** Luminance relative (WCAG) d'une couleur hexadécimale « RRGGBB ». */
@@ -103,5 +108,7 @@ export function logoPour(nom: string): Logo {
       glyphe: luminance(icone.hex) > 0.4 ? '#000000' : '#ffffff',
     }
   }
+  const image = IMAGES[nom]
+  if (image) return { type: 'image', fichier: image.fichier, lettres: initiales(nom), teinte: teinte(nom) }
   return { type: 'initiales', lettres: initiales(nom), teinte: teinte(nom) }
 }

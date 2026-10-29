@@ -1,0 +1,30 @@
+name: Récupérer les logos
+
+# À lancer à la main (onglet Actions → « Récupérer les logos » → Run workflow).
+# Télécharge l'icône officielle des marques sans icône Simple Icons et la pousse sur la branche
+# « logos-automatiques », pour relecture avant fusion.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  logos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx tsx scripts/recuperer-logos.ts
+      - name: Pousser sur la branche logos-automatiques
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b logos-automatiques
+          git add public/logos src/data/logos.json
+          git commit -m "Logos récupérés sur les sites des marques" || { echo "Rien de nouveau"; exit 0; }
+          git push --force origin logos-automatiques
