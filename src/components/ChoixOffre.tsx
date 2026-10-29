@@ -3,6 +3,7 @@ import { prixCatalogueCentimes, type Marque } from '../lib/catalogue'
 import { infosFrequence } from '../lib/libelles'
 import type { Abonnement, ServiceCatalogue } from '../types'
 import { IconeCoche } from './ui/Icones'
+import { LogoMarque } from './ui/LogoMarque'
 
 /** Liste des offres d'une marque : toucher une offre la choisit et ferme le panneau. */
 export function ChoixOffre({
@@ -18,7 +19,10 @@ export function ChoixOffre({
 }) {
   return (
     <div className="flex flex-col gap-4 pb-2 pt-1">
-      <p className="text-[0.9375rem] text-texte-2">Quelle offre as-tu ? Les prix sont indicatifs.</p>
+      <div className="flex items-center gap-3">
+        <LogoMarque nom={marque.nom} taille={40} />
+        <p className="text-[0.9375rem] text-texte-2">Quelle offre as-tu ? Les prix sont indicatifs.</p>
+      </div>
       <ul className="overflow-hidden rounded-2xl border border-bord" role="list">
         {marque.offres.map((o) => {
           const actif = choisi?.serviceId === o.id

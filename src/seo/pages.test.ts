@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { marques, trouverMarque } from '../lib/catalogue'
-import { echapper, pageIndex, pageMarque, planDuSite } from './pages'
+import { echapper, pageIndex, pageMarque, plageDePrix, planDuSite } from './pages'
 
 const ctx = { site: 'https://exemple.github.io/aboclair/', audience: '' }
 
@@ -14,6 +14,14 @@ describe('pages « Comment résilier »', () => {
     expect(html).toContain('<link rel="canonical" href="https://exemple.github.io/aboclair/resilier/basic-fit/" />')
     expect(html).toContain('href="https://my.basic-fit.com/"')
     expect(html).toContain('<td>Comfort</td><td>29,99')
+  })
+  it('donne la plage de prix de la moins chère à la plus chère', () => {
+    expect(plageDePrix(trouverMarque('Spotify')!)).toBe('4 offres, de 6,07\u00a0€ par mois à 21,24\u00a0€ par mois')
+    expect(plageDePrix(trouverMarque('Canal+')!)).toBe('27,99\u00a0€ par mois')
+  })
+  it('affiche le logo ou les initiales de la marque', () => {
+    expect(pageMarque(trouverMarque('Netflix')!, ctx)).toContain('<span class="logo-marque" style="background:#E50914"')
+    expect(pageMarque(trouverMarque('Basic-Fit')!, ctx)).toMatch(/class="logo-marque initiales"[^>]*>BF</)
   })
   it('ne parle de l’App Store que pour les services vendus en appli', () => {
     expect(pageMarque(trouverMarque('Basic-Fit')!, ctx)).not.toContain('App Store')

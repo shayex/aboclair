@@ -5,6 +5,7 @@ import { formaterDate, formaterEuros } from '../lib/format'
 import { infosFrequence, libellePayeVia } from '../lib/libelles'
 import type { Abonnement } from '../types'
 import { IconeChevron, IconePlus } from './ui/Icones'
+import { LogoMarque, nomDeMarque } from './ui/LogoMarque'
 
 interface Props {
   abonnements: Abonnement[]
@@ -42,8 +43,9 @@ export function ListeAbonnements({ abonnements, onOuvrir, onNouveau }: Props) {
                 onClick={() => onOuvrir(a.id)}
                 className="flex min-h-16 w-full items-center gap-3 px-4 py-3 text-left transition-colors duration-150 active:bg-surface-2"
               >
+                <LogoMarque nom={nomDeMarque(a)} taille={36} />
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate font-medium">{a.nom}</span>
+                  <span className="line-clamp-2 font-medium leading-snug">{a.nom}</span>
                   <span className="block truncate text-[0.8125rem] text-texte-2">
                     {[
                       libelleCategorie(a.categorie),
@@ -57,7 +59,7 @@ export function ListeAbonnements({ abonnements, onOuvrir, onNouveau }: Props) {
                 <span className="shrink-0 text-right tabular-nums">
                   <span className="block font-medium">{formaterEuros(a.prixCentimes)}</span>
                   <span className="block text-[0.8125rem] text-texte-2">
-                    {infosFrequence(a.frequence).libelle}
+                    {a.frequence === '4-semaines' ? 'les 4 semaines' : infosFrequence(a.frequence).libelle}
                   </span>
                 </span>
                 <IconeChevron className="shrink-0 text-texte-2/60" />

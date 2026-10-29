@@ -6,6 +6,7 @@ import { formaterEuros, normaliser } from '../lib/format'
 import { infosFrequence } from '../lib/libelles'
 import type { Abonnement, Categorie } from '../types'
 import { IconeChevron, IconeCoche, IconeLoupe } from './ui/Icones'
+import { LogoMarque } from './ui/LogoMarque'
 
 type Filtre = Categorie | 'populaires' | 'tout'
 
@@ -191,7 +192,8 @@ function TuileMarque({
         choisi ? 'border-accent bg-accent/10' : 'border-bord bg-surface hover:border-texte-2/40'
       }`}
     >
-      <span className="pr-7 text-[0.9375rem] font-medium leading-snug">
+      <LogoMarque nom={marque.nom} taille={30} />
+      <span className="mt-2 text-[0.9375rem] font-medium leading-snug">
         {marque.nom}
         {plusieurs && choisi && <span className="sr-only"> (choisi)</span>}
       </span>

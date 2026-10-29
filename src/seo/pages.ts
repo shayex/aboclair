@@ -6,6 +6,7 @@ import { CATEGORIES, marques, prixCatalogueCentimes, type Marque } from '../lib/
 import { CONSEIL_PREUVE, DROITS } from '../lib/droits'
 import { formaterEuros } from '../lib/format'
 import { infosFrequence } from '../lib/libelles'
+import { logoPour } from '../lib/logos'
 import type { Categorie } from '../types'
 import { URL_ABONNEMENTS_APPLE, URL_ABONNEMENTS_GOOGLE_PLAY, URL_SIGNALCONSO } from '../lib/resiliation'
 
@@ -65,7 +66,7 @@ ${o.corps}
 </main>
 <footer class="bas">
 <p>Information, pas conseil juridique. Prix indicatifs (octobre ${ANNEE}), à vérifier sur ton relevé.</p>
-<p>AboClair n’est lié à aucun des services cités. Les noms appartiennent à leurs propriétaires.</p>
+<p>AboClair n’est lié à aucun des services cités. Les noms et logos appartiennent à leurs propriétaires et servent seulement à identifier les services (icônes : Simple Icons).</p>
 </footer>
 </body>
 </html>
@@ -80,8 +81,21 @@ function appel(racine: string) {
 </aside>`
 }
 
-function plageDePrix(m: Marque): string {
-  const prix = m.offres.map((o) => `${formaterEuros(prixCatalogueCentimes(o))} ${infosFrequence(o.frequence).libelle}`)
+/** Logo de la marque (ou pastille d'initiales) en HTML statique. */
+export function logoHtml(nom: string): string {
+  const logo = logoPour(nom)
+  if (logo.type === 'icone') {
+    return `<span class="logo-marque" style="background:${logo.fond}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="${logo.glyphe}"><path d="${logo.chemin}"/></svg></span>`
+  }
+  return `<span class="logo-marque initiales" style="--teinte:${logo.teinte}" aria-hidden="true">${echapper(logo.lettres)}</span>`
+}
+
+/** « 4 offres, de 6,07 € par mois à 21,24 € par mois », de la moins chère à la plus chère sur un an. */
+export function plageDePrix(m: Marque): string {
+  const parCoutAnnuel = [...m.offres].sort(
+    (a, b) => prixCatalogueCentimes(a, 'annuel') - prixCatalogueCentimes(b, 'annuel'),
+  )
+  const prix = parCoutAnnuel.map((o) => `${formaterEuros(prixCatalogueCentimes(o))} ${infosFrequence(o.frequence).libelle}`)
   return m.offres.length === 1 ? prix[0] : `${m.offres.length} offres, de ${prix[0]} à ${prix[prix.length - 1]}`
 }
 
@@ -95,7 +109,7 @@ export function pageMarque(m: Marque, ctx: Contexte): string {
     )
     .join('\n')
   const corps = `<nav class="fil" aria-label="Fil d’Ariane"><a href="${racine}">AboClair</a> › <a href="../">Résilier un abonnement</a> › ${echapper(m.nom)}</nav>
-<h1>Comment résilier ${echapper(m.nom)}</h1>
+<div class="titre">${logoHtml(m.nom)}<h1>Comment résilier ${echapper(m.nom)}</h1></div>
 <p class="intro">Le lien direct, le chemin à suivre et tes droits. ${echapper(m.nom)} : ${echapper(plageDePrix(m))}.</p>
 
 <section>
@@ -202,4 +216,10 @@ tr:last-child td{border-bottom:0}
 .appel p{color:var(--texte-2)}
 .bas{margin-top:3rem;padding-bottom:3rem;font-size:.8125rem;color:var(--texte-2);border-top:1px solid var(--bord);padding-top:1.5rem}
 @media (max-width:30rem){.liste{columns:1}}
+.titre{display:flex;align-items:center;gap:.9rem;margin-top:.75rem}
+.titre h1{margin:0}
+.logo-marque{flex:none;display:grid;place-items:center;width:3.25rem;height:3.25rem;border-radius:.9rem;box-shadow:inset 0 0 0 1px rgb(0 0 0/.06)}
+.logo-marque svg{width:1.8rem;height:1.8rem}
+.initiales{font-weight:700;font-size:1.2rem;background:hsl(var(--teinte) 60% 92%);color:hsl(var(--teinte) 55% 30%)}
+@media (prefers-color-scheme:dark){.initiales{background:hsl(var(--teinte) 30% 24%);color:hsl(var(--teinte) 70% 82%)}.logo-marque{box-shadow:inset 0 0 0 1px rgb(255 255 255/.1)}}
 `
