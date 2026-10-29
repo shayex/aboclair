@@ -28,6 +28,8 @@ export interface LignePlan {
   abonnement: Abonnement
   verdict: Verdict
   economie: number
+  /** L'action a été faite (résilié, partagé, mis en pause). */
+  fait: boolean
 }
 
 export interface Plan {
@@ -35,6 +37,8 @@ export interface Plan {
   actions: LignePlan[]
   gardes: LignePlan[]
   economieTotale: number
+  /** Économies des actions déjà faites. */
+  economieFaite: number
   /** Abonnements dont l'usage n'a pas encore été renseigné. */
   restants: number
 }
@@ -46,13 +50,14 @@ export function construirePlan(
   const lignes: LignePlan[] = abonnements.flatMap((a) => {
     if (!a.usage) return []
     const verdict = verdictPour(a.usage, partageable(a))
-    return [{ abonnement: a, verdict, economie: economieAnnuelleCentimes(a, verdict) }]
+    return [{ abonnement: a, verdict, economie: economieAnnuelleCentimes(a, verdict), fait: Boolean(a.faitLe) }]
   })
   const actions = lignes.filter((l) => l.verdict !== 'garder').sort((x, y) => y.economie - x.economie)
   return {
     actions,
     gardes: lignes.filter((l) => l.verdict === 'garder'),
     economieTotale: actions.reduce((s, l) => s + l.economie, 0),
+    economieFaite: actions.reduce((s, l) => s + (l.fait ? l.economie : 0), 0),
     restants: abonnements.length - lignes.length,
   }
 }

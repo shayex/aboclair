@@ -11,10 +11,13 @@ export function TableauDeBord({
   totaux,
   nombre,
   comparaison,
+  economieFaite,
 }: {
   totaux: Totaux
   nombre: number
   comparaison: Comparaison | null
+  /** Économies annuelles déjà réalisées (actions cochées dans le plan). */
+  economieFaite: number
 }) {
   const idTitre = useId()
   return (
@@ -39,6 +42,11 @@ export function TableauDeBord({
             />
             <span className="text-xl font-semibold text-texte-2">par an</span>
           </p>
+          {economieFaite > 0 && (
+            <p className="mt-2 text-[0.9375rem] font-medium text-garder tabular-nums">
+              Après tes changements : {formaterEuros(totaux.annuel - economieFaite, true)} par an
+            </p>
+          )}
           <dl className="mt-6 grid grid-cols-2 gap-3">
             <div className="rounded-2xl bg-fond p-4">
               <dt className="text-[0.8125rem] font-medium text-texte-2">Par mois</dt>

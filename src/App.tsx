@@ -214,11 +214,17 @@ export function App() {
           onOuvrir={(id) => setPanneau({ type: 'modifier', id })}
           onNouveau={() => setPanneau({ type: 'nouveau', brouillon: brouillonVide() })}
         />
-        <TableauDeBord totaux={totaux} nombre={abonnements.length} comparaison={comparaison} />
+        <TableauDeBord
+          totaux={totaux}
+          nombre={abonnements.length}
+          comparaison={comparaison}
+          economieFaite={plan.economieFaite}
+        />
         <Tri abonnements={abonnements} onUsage={(id, usage) => gestion.modifier(id, { usage })} />
         <Plan
           plan={plan}
           nombre={abonnements.length}
+          onFait={(id, fait) => gestion.modifier(id, { faitLe: fait ? aujourdhuiIso() : undefined })}
           actionPour={(id, verdict) =>
             verdict === 'partager' ? null : (
               <button

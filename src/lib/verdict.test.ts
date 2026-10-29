@@ -65,7 +65,19 @@ describe('construirePlan', () => {
     expect(plan.economieTotale).toBe(18000 + 6000)
     expect(plan.restants).toBe(1)
   })
+  it('compte les économies déjà réalisées, sans tenir compte d’un « fait » sur un abonnement gardé', () => {
+    const plan = construirePlan(
+      [
+        abo({ usage: 'jamais', prixCentimes: 500, faitLe: '2026-10-29' }), // 60 € faits
+        abo({ usage: 'parfois', prixCentimes: 2000 }), // 180 € possibles
+        abo({ usage: 'souvent', faitLe: '2026-10-29' }),
+      ],
+      () => false,
+    )
+    expect(plan.economieTotale).toBe(24000)
+    expect(plan.economieFaite).toBe(6000)
+  })
   it('est vide sans abonnement', () => {
-    expect(construirePlan([])).toEqual({ actions: [], gardes: [], economieTotale: 0, restants: 0 })
+    expect(construirePlan([])).toEqual({ actions: [], gardes: [], economieTotale: 0, economieFaite: 0, restants: 0 })
   })
 })
