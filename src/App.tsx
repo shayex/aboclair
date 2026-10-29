@@ -4,10 +4,13 @@ import { Catalogue } from './components/Catalogue'
 import { EnTete } from './components/EnTete'
 import { FormulaireAbonnement } from './components/FormulaireAbonnement'
 import { ListeAbonnements } from './components/ListeAbonnements'
+import { Plan } from './components/Plan'
 import { TableauDeBord } from './components/TableauDeBord'
+import { Tri } from './components/Tri'
 import { Panneau } from './components/ui/Panneau'
 import { totaux as calculerTotaux } from './lib/calculs'
 import { trouverService } from './lib/catalogue'
+import { construirePlan } from './lib/verdict'
 import { depuisCatalogue, nouvelId, useAbonnements } from './state/useAbonnements'
 import type { Abonnement, ServiceCatalogue } from './types'
 
@@ -37,6 +40,7 @@ export function App() {
   }
 
   const totaux = useMemo(() => calculerTotaux(abonnements), [abonnements])
+  const plan = useMemo(() => construirePlan(abonnements), [abonnements])
 
   const enCours = panneau?.type === 'modifier' ? abonnements.find((a) => a.id === panneau.id) : undefined
 
@@ -117,6 +121,8 @@ export function App() {
           onNouveau={() => setPanneau({ type: 'nouveau', brouillon: brouillonVide() })}
         />
         <TableauDeBord totaux={totaux} nombre={abonnements.length} />
+        <Tri abonnements={abonnements} onUsage={(id, usage) => gestion.modifier(id, { usage })} />
+        <Plan plan={plan} nombre={abonnements.length} />
       </main>
       <BarreTotal totaux={totaux} nombre={abonnements.length} />
       <Panneau ouvert={contenu !== null} onFermer={fermer} titre={contenu?.titre ?? ''}>
