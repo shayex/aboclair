@@ -9,6 +9,11 @@ export function PiedDePage() {
         <li>Information, pas conseil juridique.</li>
         <li>Aucun compte, aucun cookie : tes données restent dans ton navigateur.</li>
         <li>AboClair n’est lié à aucun des services cités. Les noms appartiennent à leurs propriétaires.</li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}resilier/`} className="font-medium text-accent underline underline-offset-2">
+            Guides de résiliation par service
+          </a>
+        </li>
       </ul>
     </footer>
   )
