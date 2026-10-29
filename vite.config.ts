@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
     base: '/aboclair/',
     plugins: [react(), tailwindcss(), audience(env.VITE_UMAMI_WEBSITE_ID, env.VITE_SITE_URL)],
     test: {
-      include: ['src/**/*.test.ts'],
+      include: ['src/**/*.test.ts', 'scripts/**/*.test.ts'],
     },
   }
 })
