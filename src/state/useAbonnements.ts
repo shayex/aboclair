@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import { prixCatalogueCentimes } from '../lib/catalogue'
 import { charger, sauvegarder } from '../lib/stockage'
 import type { Abonnement, DonneesAboClair, ServiceCatalogue } from '../types'
@@ -47,12 +47,15 @@ export function depuisCatalogue(service: ServiceCatalogue): Abonnement {
 export function useAbonnements() {
   const [donnees, dispatch] = useReducer(reducteur, undefined, charger)
 
+  const [stockageOk, setStockageOk] = useState(true)
+
   useEffect(() => {
-    sauvegarder(donnees)
+    setStockageOk(sauvegarder(donnees))
   }, [donnees])
 
   return {
     donnees,
+    stockageOk,
     abonnements: donnees.abonnements,
     ajouter: (abonnement: Abonnement) => dispatch({ type: 'ajouter', abonnement }),
     modifier: (id: string, changements: Partial<Abonnement>) =>

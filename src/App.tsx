@@ -6,7 +6,9 @@ import { EnTete } from './components/EnTete'
 import { FicheResiliation } from './components/FicheResiliation'
 import { FormulaireAbonnement } from './components/FormulaireAbonnement'
 import { ListeAbonnements } from './components/ListeAbonnements'
+import { PiedDePage } from './components/PiedDePage'
 import { Plan } from './components/Plan'
+import { Sauvegarde } from './components/Sauvegarde'
 import { TableauDeBord } from './components/TableauDeBord'
 import { Tri } from './components/Tri'
 import { Panneau } from './components/ui/Panneau'
@@ -181,6 +183,8 @@ export function App() {
             )
           }
         />
+        <Sauvegarde donnees={gestion.donnees} stockageOk={gestion.stockageOk} onRemplacer={gestion.remplacer} />
+        <PiedDePage />
       </main>
       <BarreTotal totaux={totaux} nombre={abonnements.length} />
       <Panneau ouvert={contenu !== null} onFermer={fermer} titre={contenu?.titre ?? ''} cleContenu={contenu?.cle}>
