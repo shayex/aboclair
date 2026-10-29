@@ -8,6 +8,7 @@ describe('format', () => {
   })
   it('écrit les dates en toutes lettres', () => {
     expect(formaterDate('2026-11-12')).toBe('12 novembre 2026')
+    expect(formaterDate('2027-03-01')).toBe('1er mars 2027')
   })
   it('ignore accents, majuscules et type d’apostrophe pour la recherche', () => {
     expect(normaliser('L’Équipe')).toBe("l'equipe")

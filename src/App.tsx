@@ -1,5 +1,6 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import { BarreTotal } from './components/BarreTotal'
+import { BoutonRappel } from './components/BoutonRappel'
 import { Catalogue } from './components/Catalogue'
 import { EnTete } from './components/EnTete'
 import { FicheResiliation } from './components/FicheResiliation'
@@ -106,7 +107,11 @@ export function App() {
                 ‹ Retour aux détails
               </button>
             )}
-            <FicheResiliation abonnement={enCours} aujourdhui={aujourdhuiIso()} />
+            <FicheResiliation
+              abonnement={enCours}
+              aujourdhui={aujourdhuiIso()}
+              rappel={enCours.finEssai ? <BoutonRappel abonnement={enCours} aujourdhui={aujourdhuiIso()} /> : null}
+            />
           </>
         ),
       }
@@ -122,6 +127,7 @@ export function App() {
           onChanger={(c) => gestion.modifier(enCours.id, c)}
           actions={
             <div className="mt-1 flex flex-col gap-2">
+              <BoutonRappel abonnement={enCours} aujourdhui={aujourdhuiIso()} />
               <button
                 type="button"
                 onClick={() => setPanneau({ type: 'resilier', id: enCours.id, depuisFiche: true })}

@@ -4,7 +4,16 @@ import type { ReactNode } from 'react'
 import type { Abonnement } from '../types'
 import { IconeLien } from './ui/Icones'
 
-export function FicheResiliation({ abonnement: a, aujourdhui }: { abonnement: Abonnement; aujourdhui: string }) {
+export function FicheResiliation({
+  abonnement: a,
+  aujourdhui,
+  rappel,
+}: {
+  abonnement: Abonnement
+  aujourdhui: string
+  /** Bouton de rappel affiché sous l'alerte de fin d'essai. */
+  rappel?: ReactNode
+}) {
   const guide = guideResiliation(a)
   const essaiEnCours = a.finEssai && a.finEssai >= aujourdhui
 
@@ -15,6 +24,7 @@ export function FicheResiliation({ abonnement: a, aujourdhui }: { abonnement: Ab
           Ton essai gratuit se termine le {formaterDate(a.finEssai!)}. Résilie avant pour ne rien payer.
         </p>
       )}
+      {essaiEnCours && rappel}
       {guide.alerte && (
         <p className="rounded-2xl bg-accent/10 p-4 text-[0.9375rem] text-texte">{guide.alerte}</p>
       )}

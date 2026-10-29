@@ -19,7 +19,8 @@ const dateLongue = new Intl.DateTimeFormat('fr-FR', {
 
 /** « 2026-11-12 » → « 12 novembre 2026 » */
 export function formaterDate(iso: string): string {
-  return dateLongue.format(new Date(`${iso}T00:00:00Z`))
+  const texte = dateLongue.format(new Date(`${iso}T00:00:00Z`))
+  return texte.startsWith('1 ') ? `1er ${texte.slice(2)}` : texte
 }
 
 /** Pour la recherche : minuscules, sans accents. */
