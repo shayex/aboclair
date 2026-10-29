@@ -1,6 +1,7 @@
 /** Propose un fichier au téléchargement, entièrement dans le navigateur. */
-export function telecharger(nomFichier: string, contenu: string, type: string): void {
-  const url = URL.createObjectURL(new Blob([contenu], { type }))
+export function telecharger(nomFichier: string, contenu: string | Blob, type?: string): void {
+  const blob = typeof contenu === 'string' ? new Blob([contenu], { type }) : contenu
+  const url = URL.createObjectURL(blob)
   const lien = document.createElement('a')
   lien.href = url
   lien.download = nomFichier

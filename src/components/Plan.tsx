@@ -4,6 +4,7 @@ import type { Plan as DonneesPlan } from '../lib/verdict'
 import type { ReactNode } from 'react'
 import type { Verdict } from '../types'
 import { motion } from 'motion/react'
+import { BoutonPartage } from './BoutonPartage'
 import { IconeCoche } from './ui/Icones'
 import { Montant } from './ui/Montant'
 import { PastilleVerdict, Section } from './ui/Section'
@@ -13,12 +14,14 @@ export function Plan({
   nombre,
   actionPour,
   onFait,
+  onPartage,
 }: {
   plan: DonneesPlan
   nombre: number
   /** Bouton d'action pour une ligne (résilier…), fourni par la page. */
   actionPour?: (id: string, verdict: Verdict) => ReactNode
   onFait: (id: string, fait: boolean) => void
+  onPartage?: () => void
 }) {
   if (nombre === 0) return null
   const rienRepondu = plan.restants === nombre
@@ -45,6 +48,9 @@ export function Plan({
               soit {formaterEuros(plan.economieTotale * 10, true)} sur 10 ans
             </p>
             {plan.economieFaite > 0 && <Progression faite={plan.economieFaite} totale={plan.economieTotale} />}
+            {plan.economieTotale > 0 && (
+              <BoutonPartage economieTotale={plan.economieTotale} economieFaite={plan.economieFaite} onPartage={onPartage} />
+            )}
             {plan.restants > 0 && (
               <p className="mt-3 text-[0.8125rem] text-texte-2">
                 Encore {plan.restants} abonnement{plan.restants > 1 ? 's' : ''} à trier.
@@ -101,7 +107,7 @@ function CaseFait({ nom, fait, onChanger }: { nom: string; fait: boolean; onChan
       aria-label={`${nom} : c’est fait`}
       onClick={() => onChanger(!fait)}
       className={`appui grid size-7 shrink-0 place-items-center rounded-full border-2 ${
-        fait ? 'border-garder bg-garder text-white' : 'border-texte-2/40'
+        fait ? 'border-garder bg-garder text-accent-texte' : 'border-texte-2/40'
       }`}
     >
       {fait && (
