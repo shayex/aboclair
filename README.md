@@ -39,6 +39,14 @@ Ne change pas l’`id` d’une offre existante : les données des visiteurs y fo
 Les prix et liens de résiliation ont été rédigés sans vérification sur les sites des services :
 vérifie au moins les plus courants avant de partager le site.
 
+## Logos des marques
+
+Les logos viennent de [Simple Icons](https://simpleicons.org) (licence CC0), intégrés au site
+(aucun appel à un serveur externe), et servent seulement à identifier les services. La liste est dans
+`src/lib/logos.ts`. Plusieurs grandes marques (Amazon, Disney, Microsoft, Nintendo, OpenAI, Canal+…)
+ne sont pas dans Simple Icons : elles ont une pastille avec leurs initiales. Si une marque demande le
+retrait de son logo, il suffit de retirer sa ligne dans `ICONES`.
+
 ## Mesure d’audience (facultatif)
 
 Le site peut compter ses visites avec [Umami](https://umami.is), sans cookie ni donnée personnelle.

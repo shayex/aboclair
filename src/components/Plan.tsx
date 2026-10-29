@@ -6,6 +6,7 @@ import type { Verdict } from '../types'
 import { motion } from 'motion/react'
 import { BoutonPartage } from './BoutonPartage'
 import { IconeCoche } from './ui/Icones'
+import { LogoMarque, nomDeMarque } from './ui/LogoMarque'
 import { Montant } from './ui/Montant'
 import { PastilleVerdict, Section } from './ui/Section'
 
@@ -66,12 +67,15 @@ export function Plan({
                   <li key={a.id} className="flex items-center gap-3 border-b border-bord px-4 py-3 last:border-b-0">
                     <CaseFait nom={a.nom} fait={fait} onChanger={(v) => onFait(a.id, v)} />
                     <div className="min-w-0 flex-1">
-                      <p
-                        className={`truncate font-medium transition-colors duration-200 ${
-                          fait ? 'text-texte-2 line-through decoration-texte-2/60' : ''
-                        }`}
-                      >
-                        {a.nom}
+                      <p className="flex min-w-0 items-center gap-2">
+                        <LogoMarque nom={nomDeMarque(a)} taille={22} />
+                        <span
+                          className={`truncate font-medium transition-colors duration-200 ${
+                            fait ? 'text-texte-2 line-through decoration-texte-2/60' : ''
+                          }`}
+                        >
+                          {a.nom}
+                        </span>
                       </p>
                       <p className="mt-1 flex items-center gap-2">
                         <PastilleVerdict {...VERDICTS[verdict]} />

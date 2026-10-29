@@ -5,6 +5,7 @@ import { USAGES, VERDICTS } from '../lib/libelles'
 import { economieAnnuelleCentimes, estPartageable, verdictPour } from '../lib/verdict'
 import type { Abonnement, Usage, Verdict } from '../types'
 import { ChoixSegmente } from './ui/Choix'
+import { LogoMarque, nomDeMarque } from './ui/LogoMarque'
 import { PastilleVerdict, Section } from './ui/Section'
 
 const CONSEILS: Record<Verdict, string> = {
@@ -30,8 +31,11 @@ export function Tri({
           const economie = verdict ? economieAnnuelleCentimes(a, verdict) : 0
           return (
             <li key={a.id} className="rounded-2xl border border-bord bg-surface p-4">
-              <div className="flex items-baseline justify-between gap-3">
-                <span className="min-w-0 truncate font-medium">{a.nom}</span>
+              <div className="flex items-center justify-between gap-3">
+                <span className="flex min-w-0 items-center gap-2.5">
+                  <LogoMarque nom={nomDeMarque(a)} taille={28} />
+                  <span className="min-w-0 truncate font-medium">{a.nom}</span>
+                </span>
                 <span className="shrink-0 text-[0.8125rem] text-texte-2 tabular-nums">
                   {formaterEuros(coutAnnuelCentimes(a))} par an
                 </span>

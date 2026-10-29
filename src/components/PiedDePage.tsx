@@ -14,7 +14,10 @@ export function PiedDePage() {
             tes abonnements ni tes montants.
           </li>
         )}
-        <li>AboClair n’est lié à aucun des services cités. Les noms appartiennent à leurs propriétaires.</li>
+        <li>
+          AboClair n’est lié à aucun des services cités. Les noms et logos appartiennent à leurs propriétaires et
+          servent seulement à identifier les services (icônes : Simple Icons).
+        </li>
         <li>
           <a href={`${import.meta.env.BASE_URL}resilier/`} className="font-medium text-accent underline underline-offset-2">
             Guides de résiliation par service
