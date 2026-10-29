@@ -2,6 +2,7 @@ import { useMemo, useState, type ReactNode } from 'react'
 import { BarreTotal } from './components/BarreTotal'
 import { BoutonRappel } from './components/BoutonRappel'
 import { Catalogue } from './components/Catalogue'
+import { ChoixOffre } from './components/ChoixOffre'
 import { EnTete } from './components/EnTete'
 import { FicheResiliation } from './components/FicheResiliation'
 import { FormulaireAbonnement } from './components/FormulaireAbonnement'
@@ -13,7 +14,7 @@ import { TableauDeBord } from './components/TableauDeBord'
 import { Tri } from './components/Tri'
 import { Panneau } from './components/ui/Panneau'
 import { totaux as calculerTotaux } from './lib/calculs'
-import { trouverService } from './lib/catalogue'
+import { prixCatalogueCentimes, trouverMarque, trouverService, type Marque } from './lib/catalogue'
 import { aujourdhuiIso } from './lib/dates'
 import { construirePlan } from './lib/verdict'
 import { depuisCatalogue, nouvelId, useAbonnements } from './state/useAbonnements'
@@ -23,6 +24,7 @@ type EtatPanneau =
   | { type: 'modifier'; id: string }
   | { type: 'nouveau'; brouillon: Abonnement }
   | { type: 'resilier'; id: string; depuisFiche: boolean }
+  | { type: 'offres'; marque: string }
   | null
 
 function brouillonVide(): Abonnement {
@@ -37,21 +39,45 @@ export function App() {
   const { abonnements } = gestion
   const [panneau, setPanneau] = useState<EtatPanneau>(null)
 
-  const selectionnes = useMemo(
-    () => new Set(abonnements.flatMap((a) => (a.serviceId ? [a.serviceId] : []))),
-    [abonnements],
-  )
+  // Abonnement choisi pour chaque marque du catalogue.
+  const choix = useMemo(() => {
+    const m = new Map<string, Abonnement>()
+    for (const a of abonnements) {
+      const s = trouverService(a.serviceId)
+      if (s && !m.has(s.marque)) m.set(s.marque, a)
+    }
+    return m
+  }, [abonnements])
   const totaux = useMemo(() => calculerTotaux(abonnements), [abonnements])
   const plan = useMemo(() => construirePlan(abonnements), [abonnements])
 
-  function basculer(service: ServiceCatalogue) {
-    const existant = abonnements.find((a) => a.serviceId === service.id)
-    if (existant) gestion.supprimer(existant.id)
-    else gestion.ajouter(depuisCatalogue(service))
+  /** Une seule offre : on coche ou décoche. Plusieurs offres : on ouvre le choix. */
+  function toucherMarque(m: Marque) {
+    const existant = choix.get(m.nom)
+    if (m.offres.length > 1) setPanneau({ type: 'offres', marque: m.nom })
+    else if (existant) gestion.supprimer(existant.id)
+    else gestion.ajouter(depuisCatalogue(m.offres[0]))
+  }
+
+  function choisirOffre(offre: ServiceCatalogue) {
+    const existant = choix.get(offre.marque)
+    if (!existant) gestion.ajouter(depuisCatalogue(offre))
+    else if (existant.serviceId !== offre.id) {
+      // Changer d'offre garde les dates et le moyen de paiement, mais reprend le prix du catalogue.
+      gestion.modifier(existant.id, {
+        serviceId: offre.id,
+        nom: offre.nom,
+        prixCentimes: prixCatalogueCentimes(offre),
+        frequence: offre.frequence,
+      })
+    }
+    setPanneau(null)
   }
 
   const enCours =
-    panneau && panneau.type !== 'nouveau' ? abonnements.find((a) => a.id === panneau.id) : undefined
+    panneau && (panneau.type === 'modifier' || panneau.type === 'resilier')
+      ? abonnements.find((a) => a.id === panneau.id)
+      : undefined
 
   function fermer() {
     // Un nom effacé puis laissé vide reprend le nom du service.
@@ -87,6 +113,26 @@ export function App() {
                 Ajouter cet abonnement
               </button>
             }
+          />
+        ),
+      }
+    }
+    if (panneau?.type === 'offres') {
+      const m = trouverMarque(panneau.marque)
+      if (!m) return null
+      const choisi = choix.get(m.nom)
+      return {
+        titre: m.nom,
+        cle: 'offres',
+        corps: (
+          <ChoixOffre
+            marque={m}
+            choisi={choisi}
+            onChoisir={choisirOffre}
+            onRetirer={() => {
+              if (choisi) gestion.supprimer(choisi.id)
+              setPanneau(null)
+            }}
           />
         ),
       }
@@ -160,7 +206,7 @@ export function App() {
     <>
       <main className="mx-auto max-w-xl px-4 pb-[calc(env(safe-area-inset-bottom)+7rem)]">
         <EnTete />
-        <Catalogue selectionnes={selectionnes} onBasculer={basculer} />
+        <Catalogue choix={choix} onToucher={toucherMarque} />
         <ListeAbonnements
           abonnements={abonnements}
           onOuvrir={(id) => setPanneau({ type: 'modifier', id })}

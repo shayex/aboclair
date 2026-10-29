@@ -28,7 +28,7 @@ export const VERDICTS: Record<Verdict, { libelle: string; couleur: string }> = {
 
 export const FREQUENCES: { valeur: Frequence; libelle: string; court: string; suffixe: string }[] = [
   { valeur: 'mensuel', libelle: 'par mois', court: 'Mois', suffixe: '/mois' },
-  { valeur: '4-semaines', libelle: 'toutes les 4 semaines', court: '4 sem.', suffixe: '/4 sem.' },
+  { valeur: '4-semaines', libelle: 'toutes les 4 semaines', court: '4 sem.', suffixe: '/4\u00a0sem.' },
   { valeur: 'annuel', libelle: 'par an', court: 'An', suffixe: '/an' },
 ]
 

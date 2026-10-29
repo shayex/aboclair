@@ -1,39 +1,53 @@
 import { motion } from 'motion/react'
 import { useId, useMemo, useState, type ReactNode } from 'react'
-import { CATEGORIES, catalogue, prixCatalogueCentimes } from '../lib/catalogue'
+import { coutMensuelCentimes } from '../lib/calculs'
+import { CATEGORIES, marques, prixCatalogueCentimes, type Marque } from '../lib/catalogue'
 import { formaterEuros, normaliser } from '../lib/format'
-import type { Categorie, ServiceCatalogue } from '../types'
-import { IconeCoche, IconeLoupe } from './ui/Icones'
+import { infosFrequence } from '../lib/libelles'
+import type { Abonnement, Categorie } from '../types'
+import { IconeChevron, IconeCoche, IconeLoupe } from './ui/Icones'
 
-type Filtre = Categorie | 'tout'
+type Filtre = Categorie | 'populaires' | 'tout'
 
 interface Props {
-  selectionnes: Set<string>
-  onBasculer: (service: ServiceCatalogue) => void
+  /** Abonnement choisi pour chaque marque (par nom de marque). */
+  choix: Map<string, Abonnement>
+  onToucher: (marque: Marque) => void
   children?: ReactNode
 }
 
 const RESSORT = { type: 'spring', bounce: 0, visualDuration: 0.3 } as const
 
-export function Catalogue({ selectionnes, onBasculer, children }: Props) {
-  const [filtre, setFiltre] = useState<Filtre>('tout')
+const FILTRES: { id: Filtre; libelle: string }[] = [
+  { id: 'populaires', libelle: 'Les plus courants' },
+  { id: 'tout', libelle: 'Tout' },
+  ...CATEGORIES,
+]
+
+export function Catalogue({ choix, onToucher, children }: Props) {
+  const [filtre, setFiltre] = useState<Filtre>('populaires')
   const [recherche, setRecherche] = useState('')
   const idTitre = useId()
 
   const requete = normaliser(recherche)
   const groupes = useMemo(() => {
     if (requete) {
-      const trouves = catalogue.filter((s) => normaliser(s.nom).includes(requete))
-      return [{ id: 'resultats', libelle: null, services: trouves }]
+      const trouves = marques.filter((m) =>
+        [m.nom, ...m.offres.map((o) => o.nom)].some((n) => normaliser(n).includes(requete)),
+      )
+      return [{ id: 'resultats', libelle: null, marques: trouves }]
+    }
+    if (filtre === 'populaires') {
+      return [{ id: 'populaires', libelle: null, marques: marques.filter((m) => m.populaire) }]
     }
     return CATEGORIES.filter((c) => filtre === 'tout' || c.id === filtre).map((c) => ({
       id: c.id,
       libelle: filtre === 'tout' ? c.libelle : null,
-      services: catalogue.filter((s) => s.categorie === c.id),
+      marques: marques.filter((m) => m.categorie === c.id),
     }))
   }, [requete, filtre])
 
-  const nbResultats = groupes.reduce((n, g) => n + g.services.length, 0)
+  const nbResultats = groupes.reduce((n, g) => n + g.marques.length, 0)
 
   return (
     <section aria-labelledby={idTitre} className="mt-10">
@@ -41,9 +55,9 @@ export function Catalogue({ selectionnes, onBasculer, children }: Props) {
         <h2 id={idTitre} className="text-[1.375rem] font-semibold leading-tight tracking-[-0.015em]">
           Coche tes abonnements
         </h2>
-        {selectionnes.size > 0 && (
+        {choix.size > 0 && (
           <span className="text-sm font-medium text-texte-2 tabular-nums" aria-live="polite">
-            {selectionnes.size} {selectionnes.size > 1 ? 'cochés' : 'coché'}
+            {choix.size} {choix.size > 1 ? 'cochés' : 'coché'}
           </span>
         )}
       </div>
@@ -58,7 +72,7 @@ export function Catalogue({ selectionnes, onBasculer, children }: Props) {
           type="search"
           value={recherche}
           onChange={(e) => setRecherche(e.target.value)}
-          placeholder="Rechercher : Netflix, Spotify, Free…"
+          placeholder="Rechercher : Netflix, Basic-Fit, Free…"
           enterKeyHint="search"
           autoComplete="off"
           className="h-12 w-full rounded-2xl border border-bord bg-surface pl-10 pr-4 text-texte placeholder:text-texte-2/80 outline-none transition-[border-color,box-shadow] duration-150 focus:border-accent focus:ring-4 focus:ring-accent/15"
@@ -68,10 +82,10 @@ export function Catalogue({ selectionnes, onBasculer, children }: Props) {
       {!requete && (
         <div
           role="group"
-          aria-label="Filtrer par catégorie"
+          aria-label="Filtrer le catalogue"
           className="sans-barre -mx-4 mt-3 flex gap-1.5 overflow-x-auto px-4 pb-1"
         >
-          {[{ id: 'tout' as const, libelle: 'Tout' }, ...CATEGORIES].map((c) => {
+          {FILTRES.map((c) => {
             const actif = filtre === c.id
             return (
               <button
@@ -113,55 +127,84 @@ export function Catalogue({ selectionnes, onBasculer, children }: Props) {
             </h3>
           )}
           <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-            {g.services.map((s) => (
-              <li key={s.id}>
-                <TuileService
-                  service={s}
-                  coche={selectionnes.has(s.id)}
-                  onBasculer={() => onBasculer(s)}
-                />
+            {g.marques.map((m) => (
+              <li key={m.nom}>
+                <TuileMarque marque={m} choisi={choix.get(m.nom)} onToucher={() => onToucher(m)} />
               </li>
             ))}
           </ul>
         </div>
       ))}
 
+      {!requete && filtre === 'populaires' && (
+        <p className="mt-3 text-[0.875rem] text-texte-2">
+          Tu ne trouves pas ton service ?{' '}
+          <button type="button" onClick={() => setFiltre('tout')} className="font-medium text-accent">
+            Voir tout le catalogue
+          </button>{' '}
+          ou cherche-le.
+        </p>
+      )}
+
       {children}
     </section>
   )
 }
 
-function TuileService({
-  service,
-  coche,
-  onBasculer,
+/** Prix le plus bas de la marque, dans sa fréquence si toutes les offres ont la même. */
+function prixDepart(m: Marque): string {
+  const o0 = m.offres[0]
+  if (m.offres.length === 1) return `${formaterEuros(prixCatalogueCentimes(o0))}${infosFrequence(o0.frequence).suffixe}`
+  const memeFrequence = m.offres.every((o) => o.frequence === o0.frequence)
+  const montant = memeFrequence
+    ? `${formaterEuros(Math.min(...m.offres.map((o) => prixCatalogueCentimes(o))))}${infosFrequence(o0.frequence).suffixe}`
+    : `${formaterEuros(
+        Math.min(...m.offres.map((o) => coutMensuelCentimes({ prixCentimes: prixCatalogueCentimes(o), frequence: o.frequence }))),
+      )}/mois`
+  return `dès ${montant}`
+}
+
+function TuileMarque({
+  marque,
+  choisi,
+  onToucher,
 }: {
-  service: ServiceCatalogue
-  coche: boolean
-  onBasculer: () => void
+  marque: Marque
+  choisi: Abonnement | undefined
+  onToucher: () => void
 }) {
-  const prix = prixCatalogueCentimes(service, service.frequence)
-  const suffixe = service.frequence === 'annuel' ? '/an' : '/mois'
+  const plusieurs = marque.offres.length > 1
+  const offreChoisie = choisi && marque.offres.find((o) => o.id === choisi.serviceId)
+  // Ligne 1 : l'offre choisie ou le nombre d'offres. Ligne 2 : le prix, jamais coupé.
+  const ligneOffre = choisi ? (plusieurs ? offreChoisie?.offre : undefined) : plusieurs ? `${marque.offres.length} offres` : undefined
+  const lignePrix = choisi
+    ? `${formaterEuros(choisi.prixCentimes)}${infosFrequence(choisi.frequence).suffixe}`
+    : prixDepart(marque)
+
   return (
     <button
       type="button"
-      aria-pressed={coche}
-      onClick={onBasculer}
+      onClick={onToucher}
+      aria-pressed={plusieurs ? undefined : Boolean(choisi)}
+      aria-haspopup={plusieurs ? 'dialog' : undefined}
       className={`appui relative flex min-h-[4.75rem] w-full flex-col justify-between rounded-2xl border p-3 text-left ${
-        coche ? 'border-accent bg-accent/10' : 'border-bord bg-surface hover:border-texte-2/40'
+        choisi ? 'border-accent bg-accent/10' : 'border-bord bg-surface hover:border-texte-2/40'
       }`}
     >
-      <span className="pr-7 text-[0.9375rem] font-medium leading-snug">{service.nom}</span>
-      <span className="mt-1 text-[0.8125rem] text-texte-2 tabular-nums">
-        {formaterEuros(prix)}
-        {suffixe}
+      <span className="pr-7 text-[0.9375rem] font-medium leading-snug">
+        {marque.nom}
+        {plusieurs && choisi && <span className="sr-only"> (choisi)</span>}
+      </span>
+      <span className="mt-1 text-[0.8125rem] leading-snug text-texte-2 tabular-nums">
+        {ligneOffre && <span className="block truncate">{ligneOffre}</span>}
+        <span className="block whitespace-nowrap">{lignePrix}</span>
       </span>
       <span
         className={`absolute right-2.5 top-2.5 grid size-5 place-items-center rounded-full border-[1.5px] transition-colors duration-150 ${
-          coche ? 'border-accent bg-accent text-accent-texte' : 'border-texte-2/40'
+          choisi ? 'border-accent bg-accent text-accent-texte' : plusieurs ? 'border-transparent text-texte-2/70' : 'border-texte-2/40'
         }`}
       >
-        {coche && (
+        {choisi ? (
           <motion.span
             initial={{ scale: 0.4, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -170,6 +213,8 @@ function TuileService({
           >
             <IconeCoche className="text-[0.75rem]" />
           </motion.span>
+        ) : (
+          plusieurs && <IconeChevron className="text-sm" />
         )}
       </span>
     </button>
