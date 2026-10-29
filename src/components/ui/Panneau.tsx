@@ -1,4 +1,11 @@
-import { AnimatePresence, motion, useDragControls, useReducedMotion, type PanInfo } from 'motion/react'
+import {
+  AnimatePresence,
+  motion,
+  useDragControls,
+  useIsPresent,
+  useReducedMotion,
+  type PanInfo,
+} from 'motion/react'
 import { useEffect, useId, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -35,25 +42,38 @@ function PanneauOuvert({ onFermer, titre, children, cleContenu }: Props) {
   const refFermer = useRef(onFermer)
   refFermer.current = onFermer
 
+  const present = useIsPresent()
+  const refRendre = useRef<(() => void) | null>(null)
+
   useEffect(() => {
     const precedent = document.activeElement as HTMLElement | null
     const racine = document.getElementById('root')
-    if (racine) racine.inert = true
     const html = document.documentElement
     const debordement = html.style.overflow
+    if (racine) racine.inert = true
     html.style.overflow = 'hidden'
     refPanneau.current?.focus({ preventScroll: true })
     const touche = (e: KeyboardEvent) => {
       if (e.key === 'Escape') refFermer.current()
     }
     document.addEventListener('keydown', touche)
-    return () => {
+
+    let rendu = false
+    refRendre.current = () => {
+      if (rendu) return
+      rendu = true
       if (racine) racine.inert = false
       html.style.overflow = debordement
       document.removeEventListener('keydown', touche)
       precedent?.focus({ preventScroll: true })
     }
+    return () => refRendre.current?.()
   }, [])
+
+  // Dès que la fermeture commence, la page redevient utilisable : on n'attend pas la fin de l'animation.
+  useEffect(() => {
+    if (!present) refRendre.current?.()
+  }, [present])
 
   function finGlisser(_: PointerEvent, info: PanInfo) {
     const hauteur = refPanneau.current?.offsetHeight ?? 600
@@ -62,7 +82,7 @@ function PanneauOuvert({ onFermer, titre, children, cleContenu }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center">
+    <div className={`fixed inset-0 z-50 flex items-end justify-center ${present ? '' : 'pointer-events-none'}`}>
       <motion.div
         className="absolute inset-0 bg-black/40"
         initial={{ opacity: 0 }}
@@ -76,6 +96,7 @@ function PanneauOuvert({ onFermer, titre, children, cleContenu }: Props) {
         ref={refPanneau}
         role="dialog"
         aria-modal="true"
+        aria-hidden={present ? undefined : true}
         aria-labelledby={idTitre}
         tabIndex={-1}
         initial={reduit ? { opacity: 0 } : { y: '100%' }}
