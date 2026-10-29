@@ -3,7 +3,7 @@ import type { Abonnement, DonneesAboClair } from '../types'
 export const CLE_STOCKAGE = 'aboclair:v1'
 
 const CATEGORIES = ['video', 'musique', 'ia', 'sport', 'presse', 'jeux', 'cloud', 'operateurs', 'autre']
-const FREQUENCES = ['mensuel', 'annuel']
+const FREQUENCES = ['mensuel', '4-semaines', 'annuel']
 const PAYE_VIA = ['cb', 'paypal', 'app-store', 'google-play', 'facture-operateur', 'autre']
 const USAGES = ['souvent', 'parfois', 'jamais']
 const DATE_ISO = /^\d{4}-\d{2}-\d{2}$/
@@ -42,6 +42,7 @@ export function estAbonnement(v: unknown): v is Abonnement {
     FREQUENCES.includes(a.frequence) &&
     dateOptionnelle(a.dateRenouvellement) &&
     dateOptionnelle(a.finEssai) &&
+    dateOptionnelle(a.faitLe) &&
     valeurOptionnelle(a.payeVia, PAYE_VIA) &&
     valeurOptionnelle(a.usage, USAGES)
   )

@@ -14,6 +14,10 @@ describe('coûts', () => {
   it('multiplie un prix mensuel par 12 pour le coût annuel', () => {
     expect(coutAnnuelCentimes({ prixCentimes: 1499, frequence: 'mensuel' })).toBe(17988)
   })
+  it('compte 13 prélèvements par an pour un abonnement toutes les 4 semaines', () => {
+    expect(coutAnnuelCentimes({ prixCentimes: 2999, frequence: '4-semaines' })).toBe(38987)
+    expect(coutMensuelCentimes({ prixCentimes: 2999, frequence: '4-semaines' })).toBe(3249)
+  })
   it('garde un prix annuel tel quel', () => {
     expect(coutAnnuelCentimes({ prixCentimes: 7199, frequence: 'annuel' })).toBe(7199)
   })
@@ -46,6 +50,11 @@ describe('convertirPrix', () => {
     expect(convertirPrix(8388, 'annuel', 'mensuel')).toBe(699)
     expect(convertirPrix(1000, 'annuel', 'mensuel')).toBe(83)
   })
+  it('convertit depuis et vers 4 semaines à coût annuel égal', () => {
+    expect(convertirPrix(2999, '4-semaines', 'mensuel')).toBe(3249)
+    expect(convertirPrix(2999, '4-semaines', 'annuel')).toBe(38987)
+    expect(convertirPrix(38987, 'annuel', '4-semaines')).toBe(2999)
+  })
   it('ne change rien si la fréquence est la même', () => {
     expect(convertirPrix(1299, 'mensuel', 'mensuel')).toBe(1299)
   })
@@ -54,10 +63,10 @@ describe('convertirPrix', () => {
 describe('prixApresChangementFrequence', () => {
   const ps: ServiceCatalogue = {
     id: 'ps',
+    marque: 'PS Plus',
     nom: 'PS Plus',
     categorie: 'jeux',
-    prixMensuelIndicatif: 6,
-    prixAnnuelIndicatif: 71.99,
+    prixIndicatif: 71.99,
     frequence: 'annuel',
     urlResiliation: 'https://exemple.fr',
     noteResiliation: '',
