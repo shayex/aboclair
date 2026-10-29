@@ -20,14 +20,15 @@ export interface Rappel {
   annuel: boolean
 }
 
-/** Première échéance à partir d'aujourd'hui, en avançant d'un mois ou d'un an depuis la date saisie. */
+/** Première échéance à partir d'aujourd'hui, en avançant d'une période à la fois depuis la date saisie. */
 export function prochaineEcheance(date: string, frequence: Abonnement['frequence'], aujourdhui: string): string {
-  const pas = frequence === 'mensuel' ? 1 : 12
   let n = 0
   let echeance = date
   while (echeance < aujourdhui) {
     n += 1
-    echeance = ajouterMois(date, n * pas) // depuis la date d'origine : le 31 reste le 31 quand le mois le permet
+    // Toujours depuis la date d'origine : le 31 reste le 31 quand le mois le permet.
+    echeance =
+      frequence === '4-semaines' ? ajouterJours(date, 28 * n) : ajouterMois(date, n * (frequence === 'mensuel' ? 1 : 12))
   }
   return echeance
 }

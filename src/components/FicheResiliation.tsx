@@ -1,3 +1,6 @@
+import { suivre } from '../lib/audience'
+import { CONSEIL_PREUVE, DROITS } from '../lib/droits'
+import { trouverMarque, trouverService } from '../lib/catalogue'
 import { formaterDate } from '../lib/format'
 import { guideResiliation, URL_SIGNALCONSO } from '../lib/resiliation'
 import type { ReactNode } from 'react'
@@ -15,6 +18,8 @@ export function FicheResiliation({
   rappel?: ReactNode
 }) {
   const guide = guideResiliation(a)
+  const service = trouverService(a.serviceId)
+  const marque = service && trouverMarque(service.marque)
   const essaiEnCours = a.finEssai && a.finEssai >= aujourdhui
 
   return (
@@ -35,6 +40,7 @@ export function FicheResiliation({
             href={guide.lien.url}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => suivre('lien-resiliation')}
             className="appui mt-2 flex h-12 items-center justify-center gap-2 rounded-2xl bg-accent px-4 text-[0.9375rem] font-semibold text-accent-texte"
           >
             {guide.lien.libelle}
@@ -46,30 +52,18 @@ export function FicheResiliation({
           <p className="mt-0.5 text-[0.9375rem] text-texte-2">{guide.etape}</p>
         </Etape>
         <Etape numero={3} titre="Garde une preuve">
-          <p className="mt-0.5 text-[0.9375rem] text-texte-2">
-            Fais une capture d’écran de la confirmation, et garde l’e-mail si tu en reçois un. Sans preuve, une
-            résiliation est difficile à faire valoir.
-          </p>
+          <p className="mt-0.5 text-[0.9375rem] text-texte-2">{CONSEIL_PREUVE}</p>
         </Etape>
       </ol>
 
       <div className="rounded-2xl bg-fond p-4">
         <h3 className="font-semibold">Tes droits</h3>
         <ul className="mt-2 flex flex-col gap-3 text-[0.9375rem] text-texte-2">
-          <li>
-            <strong className="font-semibold text-texte">Résiliation en 3 clics.</strong> Depuis le 1er juin 2023, un
-            contrat souscrit en ligne doit pouvoir être résilié en ligne, simplement et gratuitement. Le professionnel
-            doit confirmer ta demande.
-          </li>
-          <li>
-            <strong className="font-semibold text-texte">Loi Chatel.</strong> Pour un abonnement reconduit
-            automatiquement, le professionnel doit te prévenir par écrit 1 à 3 mois avant l’échéance. S’il ne l’a pas
-            fait, tu peux résilier gratuitement à tout moment après la reconduction.
-          </li>
-          <li>
-            <strong className="font-semibold text-texte">Engagement.</strong> Pour une box ou une salle de sport,
-            résilier avant la fin de l’engagement peut coûter des frais.
-          </li>
+          {DROITS.map((d) => (
+            <li key={d.titre}>
+              <strong className="font-semibold text-texte">{d.titre}</strong> {d.texte}
+            </li>
+          ))}
         </ul>
         <p className="mt-3 text-[0.9375rem] text-texte-2">
           Un service bloque ta résiliation ?{' '}
@@ -85,7 +79,20 @@ export function FicheResiliation({
         </p>
       </div>
 
-      <p className="text-[0.8125rem] text-texte-2">Information, pas conseil juridique.</p>
+      <p className="text-[0.8125rem] text-texte-2">
+        Information, pas conseil juridique.
+        {marque && (
+          <>
+            {' '}
+            <a
+              href={`${import.meta.env.BASE_URL}resilier/${marque.slug}/`}
+              className="font-medium text-accent underline underline-offset-2"
+            >
+              Guide complet pour {marque.nom}
+            </a>
+          </>
+        )}
+      </p>
     </div>
   )
 }

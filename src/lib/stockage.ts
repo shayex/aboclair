@@ -1,9 +1,10 @@
 import type { Abonnement, DonneesAboClair } from '../types'
+import { trouverService } from './catalogue'
 
 export const CLE_STOCKAGE = 'aboclair:v1'
 
 const CATEGORIES = ['video', 'musique', 'ia', 'sport', 'presse', 'jeux', 'cloud', 'operateurs', 'autre']
-const FREQUENCES = ['mensuel', 'annuel']
+const FREQUENCES = ['mensuel', '4-semaines', 'annuel']
 const PAYE_VIA = ['cb', 'paypal', 'app-store', 'google-play', 'facture-operateur', 'autre']
 const USAGES = ['souvent', 'parfois', 'jamais']
 const DATE_ISO = /^\d{4}-\d{2}-\d{2}$/
@@ -42,6 +43,7 @@ export function estAbonnement(v: unknown): v is Abonnement {
     FREQUENCES.includes(a.frequence) &&
     dateOptionnelle(a.dateRenouvellement) &&
     dateOptionnelle(a.finEssai) &&
+    dateOptionnelle(a.faitLe) &&
     valeurOptionnelle(a.payeVia, PAYE_VIA) &&
     valeurOptionnelle(a.usage, USAGES)
   )
@@ -81,13 +83,31 @@ export function versJson(donnees: DonneesAboClair, maintenant = new Date()): str
   return JSON.stringify({ ...donnees, exporteLe: maintenant.toISOString() }, null, 2)
 }
 
+/**
+ * La première version du catalogue comptait Basic-Fit « par mois » alors qu'il prélève toutes les
+ * 4 semaines. Si le prix enregistré est resté celui du catalogue, on corrige la fréquence ;
+ * un prix modifié par l'utilisateur n'est pas touché.
+ */
+export function migrer(donnees: DonneesAboClair): DonneesAboClair {
+  return {
+    ...donnees,
+    abonnements: donnees.abonnements.map((a) => {
+      const s = trouverService(a.serviceId)
+      const prixCatalogue = s && Math.round(s.prixIndicatif * 100)
+      return s && s.frequence === '4-semaines' && a.frequence === 'mensuel' && a.prixCentimes === prixCatalogue
+        ? { ...a, frequence: '4-semaines' }
+        : a
+    }),
+  }
+}
+
 /** Le stockage peut être indisponible (navigation privée, données bloquées) : on ne plante jamais. */
 export function charger(): DonneesAboClair {
   try {
     const texte = localStorage.getItem(CLE_STOCKAGE)
     if (!texte) return donneesVides()
     const resultat = lireJson(texte)
-    return resultat.ok ? resultat.donnees : donneesVides()
+    return resultat.ok ? migrer(resultat.donnees) : donneesVides()
   } catch {
     return donneesVides()
   }

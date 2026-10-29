@@ -1,4 +1,4 @@
-import type { PayeVia, Usage, Verdict } from '../types'
+import type { Frequence, PayeVia, Usage, Verdict } from '../types'
 
 export const PAYE_VIA: { valeur: PayeVia; libelle: string }[] = [
   { valeur: 'cb', libelle: 'Carte bancaire' },
@@ -24,4 +24,14 @@ export const VERDICTS: Record<Verdict, { libelle: string; couleur: string }> = {
   partager: { libelle: 'Partager', couleur: 'text-partager bg-partager/12' },
   pause: { libelle: 'Mettre en pause', couleur: 'text-pause bg-pause/12' },
   couper: { libelle: 'Couper', couleur: 'text-couper bg-couper/12' },
+}
+
+export const FREQUENCES: { valeur: Frequence; libelle: string; court: string; suffixe: string }[] = [
+  { valeur: 'mensuel', libelle: 'par mois', court: 'Mois', suffixe: '/mois' },
+  { valeur: '4-semaines', libelle: 'toutes les 4 semaines', court: '4 sem.', suffixe: '/4\u00a0sem.' },
+  { valeur: 'annuel', libelle: 'par an', court: 'An', suffixe: '/an' },
+]
+
+export function infosFrequence(f: Frequence) {
+  return FREQUENCES.find((x) => x.valeur === f)!
 }

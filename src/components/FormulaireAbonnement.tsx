@@ -8,7 +8,7 @@ import {
   prixApresChangementFrequence,
 } from '../lib/calculs'
 import { formaterEuros } from '../lib/format'
-import { PAYE_VIA } from '../lib/libelles'
+import { FREQUENCES, infosFrequence, PAYE_VIA } from '../lib/libelles'
 import type { Abonnement, Categorie, Frequence } from '../types'
 import { ChoixPuces, ChoixSegmente, Interrupteur } from './ui/Choix'
 
@@ -53,9 +53,11 @@ export function FormulaireAbonnement({ abonnement: a, onChanger, actions, focusN
   }
 
   const equivalent =
-    a.frequence === 'mensuel'
-      ? `soit ${formaterEuros(coutAnnuelCentimes(a))} par an`
-      : `soit ${formaterEuros(coutMensuelCentimes(a))} par mois`
+    a.frequence === 'annuel'
+      ? `soit ${formaterEuros(coutMensuelCentimes(a))} par mois`
+      : a.frequence === '4-semaines'
+        ? `13 prélèvements par an, soit ${formaterEuros(coutAnnuelCentimes(a))} par an`
+        : `soit ${formaterEuros(coutAnnuelCentimes(a))} par an`
 
   return (
     <div className="flex flex-col gap-5 pb-2 pt-2">
@@ -94,35 +96,30 @@ export function FormulaireAbonnement({ abonnement: a, onChanger, actions, focusN
         </Champ>
       )}
 
-      <div className="grid grid-cols-[1fr_auto] items-end gap-3">
-        <div>
-          <label htmlFor={idPrix} className="mb-1.5 block text-sm font-medium text-texte-2">
-            Prix
-          </label>
-          <div className="relative">
-            <input
-              id={idPrix}
-              type="text"
-              inputMode="decimal"
-              value={saisiePrix}
-              onChange={(e) => changerPrix(e.target.value)}
-              onFocus={(e) => e.target.select()}
-              aria-invalid={prixEnErreur}
-              placeholder="0,00"
-              aria-describedby={idAidePrix}
-              className={`${CLASSE_CHAMP} pr-9 tabular-nums`}
-            />
-            <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-texte-2">€</span>
-          </div>
+      <div>
+        <label htmlFor={idPrix} className="mb-1.5 block text-sm font-medium text-texte-2">
+          Prix à chaque prélèvement
+        </label>
+        <div className="relative">
+          <input
+            id={idPrix}
+            type="text"
+            inputMode="decimal"
+            value={saisiePrix}
+            onChange={(e) => changerPrix(e.target.value)}
+            onFocus={(e) => e.target.select()}
+            aria-invalid={prixEnErreur}
+            placeholder="0,00"
+            aria-describedby={idAidePrix}
+            className={`${CLASSE_CHAMP} pr-9 tabular-nums`}
+          />
+          <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-texte-2">€</span>
         </div>
-        <div className="w-[11.5rem]">
+        <div className="mt-2">
           <ChoixSegmente
-            legende="Fréquence"
+            legende="Fréquence de prélèvement"
             masquerLegende
-            options={[
-              { valeur: 'mensuel', libelle: 'par mois' },
-              { valeur: 'annuel', libelle: 'par an' },
-            ]}
+            options={FREQUENCES.map((f) => ({ valeur: f.valeur, libelle: f.court === '4 sem.' ? '4 semaines' : f.libelle }))}
             valeur={a.frequence}
             onChanger={changerFrequence}
           />
@@ -133,7 +130,7 @@ export function FormulaireAbonnement({ abonnement: a, onChanger, actions, focusN
         {service && prixValide && (
           <span className="block text-[0.8125rem]">
             Prix du catalogue : {formaterEuros(prixCatalogueCentimes(service, a.frequence))}
-            {a.frequence === 'mensuel' ? '/mois' : '/an'}, indicatif (octobre 2026). Vérifie-le sur ton relevé.
+            {infosFrequence(a.frequence).suffixe}, indicatif (octobre 2026). Vérifie-le sur ton relevé.
           </span>
         )}
       </p>

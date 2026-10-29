@@ -1,10 +1,12 @@
 import type { Abonnement, Frequence, ServiceCatalogue } from '../types'
-import { prixCatalogueCentimes } from './catalogue'
+import { convertirPrix, PRELEVEMENTS_PAR_AN, prixCatalogueCentimes } from './catalogue'
+
+export { convertirPrix }
 
 type Prix = Pick<Abonnement, 'prixCentimes' | 'frequence'>
 
 export function coutAnnuelCentimes(a: Prix): number {
-  return a.frequence === 'mensuel' ? a.prixCentimes * 12 : a.prixCentimes
+  return a.prixCentimes * PRELEVEMENTS_PAR_AN[a.frequence]
 }
 
 export function coutMensuelCentimes(a: Prix): number {
@@ -23,15 +25,10 @@ export function totaux(abonnements: Prix[]): Totaux {
   return { mensuel: Math.round(annuel / 12), annuel, dixAns: annuel * 10 }
 }
 
-export function convertirPrix(centimes: number, de: Frequence, vers: Frequence): number {
-  if (de === vers) return centimes
-  return vers === 'annuel' ? centimes * 12 : Math.round(centimes / 12)
-}
-
 /**
- * Prix proposé quand l'utilisateur change de fréquence. Si le prix est encore celui du
- * catalogue, on reprend le prix catalogue de l'autre fréquence (une offre annuelle coûte
- * souvent moins que 12 mois). Sinon on convertit simplement.
+ * Prix proposé quand l'utilisateur change de fréquence : on garde le même coût annuel.
+ * Si le prix est encore celui du catalogue, on repart du prix catalogue pour éviter
+ * d'accumuler des arrondis en passant d'une fréquence à l'autre.
  */
 export function prixApresChangementFrequence(
   a: Prix,

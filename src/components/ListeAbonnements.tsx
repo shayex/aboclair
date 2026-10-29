@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useId } from 'react'
 import { libelleCategorie } from '../lib/catalogue'
 import { formaterDate, formaterEuros } from '../lib/format'
-import { libellePayeVia } from '../lib/libelles'
+import { infosFrequence, libellePayeVia } from '../lib/libelles'
 import type { Abonnement } from '../types'
 import { IconeChevron, IconePlus } from './ui/Icones'
 
@@ -57,7 +57,7 @@ export function ListeAbonnements({ abonnements, onOuvrir, onNouveau }: Props) {
                 <span className="shrink-0 text-right tabular-nums">
                   <span className="block font-medium">{formaterEuros(a.prixCentimes)}</span>
                   <span className="block text-[0.8125rem] text-texte-2">
-                    {a.frequence === 'mensuel' ? 'par mois' : 'par an'}
+                    {infosFrequence(a.frequence).libelle}
                   </span>
                 </span>
                 <IconeChevron className="shrink-0 text-texte-2/60" />

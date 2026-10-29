@@ -33,6 +33,10 @@ describe('prochaineEcheance', () => {
     expect(prochaineEcheance('2026-03-05', 'mensuel', AUJOURDHUI)).toBe('2026-11-05')
     expect(prochaineEcheance('2025-02-10', 'annuel', AUJOURDHUI)).toBe('2027-02-10')
   })
+  it('avance de 28 jours en 28 jours pour un prélèvement toutes les 4 semaines', () => {
+    expect(prochaineEcheance('2026-10-01', '4-semaines', AUJOURDHUI)).toBe('2026-10-29')
+    expect(prochaineEcheance('2026-09-30', '4-semaines', AUJOURDHUI)).toBe('2026-11-25')
+  })
   it('ne dérive pas après un mois court', () => {
     expect(prochaineEcheance('2026-01-31', 'mensuel', AUJOURDHUI)).toBe('2026-10-31')
   })

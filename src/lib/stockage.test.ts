@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { DonneesAboClair } from '../types'
-import { charger, CLE_STOCKAGE, donneesVides, lireJson, sauvegarder, versJson } from './stockage'
+import { charger, CLE_STOCKAGE, donneesVides, lireJson, migrer, sauvegarder, versJson } from './stockage'
 
 const exemple: DonneesAboClair = {
   version: 1,
@@ -51,6 +51,19 @@ describe('lireJson refuse les fichiers abîmés', () => {
     const r = lireJson(texte)
     expect(r.ok).toBe(false)
     if (!r.ok) expect(r.erreur).toMatch(erreur)
+  })
+})
+
+describe('migrer', () => {
+  const bf = { id: 'x', serviceId: 'basic-fit', nom: 'Basic-Fit Comfort', categorie: 'sport' as const, prixCentimes: 2999 }
+  it('passe Basic-Fit à 4 semaines si le prix est celui du catalogue', () => {
+    const d = migrer({ version: 1, abonnements: [{ ...bf, frequence: 'mensuel' }] })
+    expect(d.abonnements[0].frequence).toBe('4-semaines')
+  })
+  it('ne touche pas un prix modifié ni les autres abonnements', () => {
+    const d = migrer({ version: 1, abonnements: [{ ...bf, prixCentimes: 2499, frequence: 'mensuel' }, exemple.abonnements[0]] })
+    expect(d.abonnements[0].frequence).toBe('mensuel')
+    expect(d.abonnements[1]).toEqual(exemple.abonnements[0])
   })
 })
 
