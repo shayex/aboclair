@@ -1,3 +1,12 @@
+/**
+ * Marques sans icône Simple Icons dont le logo récupéré a été écarté à la relecture :
+ * elles gardent leurs initiales.
+ */
+export const EXCLUES: Record<string, string> = {
+  'EA Play': 'icône du site trop petite : pixelisée une fois agrandie',
+  'Kindle Unlimited': 'le site donne le logo Amazon, pas celui de Kindle',
+}
+
 /** Site officiel de chaque marque sans icône Simple Icons, d'où récupérer son logo. */
 export const SITES: Record<string, string> = {
   'Amazon Prime': 'https://www.amazon.fr/',
@@ -15,10 +24,8 @@ export const SITES: Record<string, string> = {
   Libération: 'https://www.liberation.fr/',
   Mediapart: 'https://www.mediapart.fr/',
   Cafeyn: 'https://www.cafeyn.co/',
-  'Kindle Unlimited': 'https://www.amazon.fr/kindle-dbs/ku/ku-central',
   'Xbox Game Pass': 'https://www.xbox.com/',
   'Nintendo Switch Online': 'https://www.nintendo.com/',
-  'EA Play': 'https://www.ea.com/',
   'Microsoft 365': 'https://www.microsoft365.com/',
   'Box Free': 'https://www.free.fr/',
   'Box SFR': 'https://www.sfr.fr/',

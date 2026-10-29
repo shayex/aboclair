@@ -4,7 +4,7 @@ import manifeste from '../src/data/logos.json'
 import { marques } from '../src/lib/catalogue'
 import { ICONES } from '../src/lib/logos'
 import { iconesDeclarees } from './icones-html'
-import { SITES } from './sites-des-marques'
+import { EXCLUES, SITES } from './sites-des-marques'
 
 describe('iconesDeclarees', () => {
   const html = `<head>
@@ -28,9 +28,12 @@ describe('iconesDeclarees', () => {
 })
 
 describe('logos récupérés', () => {
-  it('visitent exactement les marques sans icône Simple Icons', () => {
-    const sansIcone = marques.map((m) => m.nom).filter((n) => !ICONES[n]).sort()
+  it('visitent exactement les marques sans icône Simple Icons, hors exclusions', () => {
+    const sansIcone = marques.map((m) => m.nom).filter((n) => !ICONES[n] && !EXCLUES[n]).sort()
     expect(Object.keys(SITES).sort()).toEqual(sansIcone)
+  })
+  it('n’affichent aucune marque exclue', () => {
+    for (const nom of Object.keys(EXCLUES)) expect(Object.keys(manifeste)).not.toContain(nom)
   })
   it('pointent vers des fichiers présents dans public/', () => {
     for (const { fichier } of Object.values(manifeste as Record<string, { fichier: string }>)) {

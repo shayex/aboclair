@@ -1,1 +1,102 @@
-{}
+{
+  "Amazon Prime": {
+    "fichier": "logos/amazon-prime.png",
+    "source": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.amazon.fr&size=128"
+  },
+  "Disney+": {
+    "fichier": "logos/disney-plus.png",
+    "source": "https://static-assets.bamgrid.com/product/disneyplus/favicons/disPlus-favicon-180x180.7d56f648dc95f591721935193bc827cb.png"
+  },
+  "Canal+": {
+    "fichier": "logos/canal-plus.png",
+    "source": "https://www.canalplus.com/apple-touch-icon-180x180.png"
+  },
+  "Amazon Music Unlimited": {
+    "fichier": "logos/amazon-music-unlimited.png",
+    "source": "https://m.media-amazon.com/images/G/01/music/logo/1.0/smile_256x256.png"
+  },
+  "Qobuz": {
+    "fichier": "logos/qobuz.png",
+    "source": "https://static.qobuz.com/images/favicon/apple-touch-icon.png"
+  },
+  "ChatGPT": {
+    "fichier": "logos/chatgpt.png",
+    "source": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://chatgpt.com&size=128"
+  },
+  "Basic-Fit": {
+    "fichier": "logos/basic-fit.png",
+    "source": "https://www.basic-fit.com/on/demandware.static/Sites-BFE-Site/-/default/dwc3096dbe/img/favicon-180x180.png"
+  },
+  "Fitness Park": {
+    "fichier": "logos/fitness-park.png",
+    "source": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.fitnesspark.fr&size=128"
+  },
+  "beIN SPORTS": {
+    "fichier": "logos/bein-sports.png",
+    "source": "https://www.beinsports.com/favicon/apple-icon-180x180.png"
+  },
+  "Ligue 1+": {
+    "fichier": "logos/ligue-1-plus.png",
+    "source": "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.ligue1plus.fr&size=128"
+  },
+  "Le Monde": {
+    "fichier": "logos/le-monde.png",
+    "source": "https://www.lemonde.fr/bucket/resources/front/static/img/logos/pwa-180.png"
+  },
+  "Le Figaro": {
+    "fichier": "logos/le-figaro.png",
+    "source": "https://www.lefigaro.fr/apple-touch-icon.png"
+  },
+  "Libération": {
+    "fichier": "logos/liberation.png",
+    "source": "https://www.liberation.fr/apple-touch-icon.png"
+  },
+  "Mediapart": {
+    "fichier": "logos/mediapart.png",
+    "source": "https://www.mediapart.fr/icon-news-180x180.png"
+  },
+  "Cafeyn": {
+    "fichier": "logos/cafeyn.png",
+    "source": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.cafeyn.co&size=128"
+  },
+  "Xbox Game Pass": {
+    "fichier": "logos/xbox-game-pass.png",
+    "source": "https://cms-assets.xboxservices.com/assets/34/2a/342ab54f-f3c6-4e0f-b0f3-91f81a20b15b.png?n=apple-touch-icon.png"
+  },
+  "Nintendo Switch Online": {
+    "fichier": "logos/nintendo-switch-online.png",
+    "source": "https://assets.nintendo.com/image/upload/ncom/icons/fav-icons/apple-touch-icon.png"
+  },
+  "Microsoft 365": {
+    "fichier": "logos/microsoft-365.png",
+    "source": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.microsoft365.com&size=128"
+  },
+  "Box Free": {
+    "fichier": "logos/box-free.png",
+    "source": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.free.fr&size=128"
+  },
+  "Box SFR": {
+    "fichier": "logos/box-sfr.png",
+    "source": "https://static.s-sfr.fr/media/icon-192x192.png"
+  },
+  "Box Bouygues Telecom (Bbox)": {
+    "fichier": "logos/box-bouygues-telecom-bbox.png",
+    "source": "https://www.bouyguestelecom.fr/skin/frontend/bytel/default/medias/images/favicons/apple-touch-icon-180x180.png"
+  },
+  "Forfait Free": {
+    "fichier": "logos/forfait-free.png",
+    "source": "https://mobile.free.fr/static/favicons/apple-touch-icon-152x152.png"
+  },
+  "Forfait Sosh": {
+    "fichier": "logos/forfait-sosh.png",
+    "source": "https://hpsosh.cdn.s.woopic.com/assets/apple-touch-icon-2026.png"
+  },
+  "Forfait RED by SFR": {
+    "fichier": "logos/forfait-red-by-sfr.png",
+    "source": "https://static.s-sfr.fr/media/iphone_114x114-red.png"
+  },
+  "Forfait B&You": {
+    "fichier": "logos/forfait-b-you.png",
+    "source": "https://www.bouyguestelecom.fr/skin/frontend/bytel/default/medias/images/favicons/apple-touch-icon-180x180.png"
+  }
+}
