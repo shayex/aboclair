@@ -43,9 +43,16 @@ vérifie au moins les plus courants avant de partager le site.
 
 Les logos viennent de [Simple Icons](https://simpleicons.org) (licence CC0), intégrés au site
 (aucun appel à un serveur externe), et servent seulement à identifier les services. La liste est dans
-`src/lib/logos.ts`. Plusieurs grandes marques (Amazon, Disney, Microsoft, Nintendo, OpenAI, Canal+…)
-ne sont pas dans Simple Icons : elles ont une pastille avec leurs initiales. Si une marque demande le
-retrait de son logo, il suffit de retirer sa ligne dans `ICONES`.
+`src/lib/logos.ts`.
+
+Pour les marques absentes de Simple Icons (Amazon, Disney+, Canal+, ChatGPT, Basic-Fit, opérateurs…),
+le workflow manuel **« Récupérer les logos »** (onglet Actions) télécharge l’icône officielle sur le site
+de chaque marque (`scripts/sites-des-marques.ts`) et la pousse sur la branche `logos-automatiques`.
+Après relecture, les bonnes images vont dans `public/logos/` et sont listées dans `src/data/logos.json`.
+Les logos écartés à la relecture sont listés dans `EXCLUES` ; ces marques gardent leurs initiales.
+
+Si une marque demande le retrait de son logo : retire sa ligne dans `ICONES` ou dans
+`src/data/logos.json` (et son fichier), puis ajoute-la à `EXCLUES`.
 
 ## Mesure d’audience (facultatif)
 

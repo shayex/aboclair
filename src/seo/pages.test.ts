@@ -21,7 +21,8 @@ describe('pages « Comment résilier »', () => {
   })
   it('affiche le logo ou les initiales de la marque', () => {
     expect(pageMarque(trouverMarque('Netflix')!, ctx)).toContain('<span class="logo-marque" style="background:#E50914"')
-    expect(pageMarque(trouverMarque('Basic-Fit')!, ctx)).toMatch(/class="logo-marque initiales"[^>]*>BF</)
+    expect(pageMarque(trouverMarque('EA Play')!, ctx)).toMatch(/class="logo-marque initiales"[^>]*>EP</)
+    expect(pageMarque(trouverMarque('Basic-Fit')!, ctx)).toContain('<img src="../../logos/basic-fit.png"')
   })
   it('ne parle de l’App Store que pour les services vendus en appli', () => {
     expect(pageMarque(trouverMarque('Basic-Fit')!, ctx)).not.toContain('App Store')
