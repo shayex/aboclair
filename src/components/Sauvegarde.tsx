@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { suivre } from '../lib/audience'
 import { lireJson, versJson } from '../lib/stockage'
 import { aujourdhuiIso } from '../lib/dates'
 import { telecharger } from '../lib/telechargement'
@@ -23,6 +24,7 @@ export function Sauvegarde({
   function exporter() {
     telecharger(`aboclair-${aujourdhuiIso()}.json`, versJson(donnees), 'application/json')
     setMessage({ type: 'ok', texte: 'Sauvegarde téléchargée. Garde-la dans tes fichiers ou ton cloud.' })
+    suivre('sauvegarde-exportee')
   }
 
   async function importer(fichier: File | undefined) {
@@ -48,7 +50,7 @@ export function Sauvegarde({
   return (
     <Section
       titre="Tes données"
-      intro="Tout reste dans ce navigateur, rien n’est envoyé. Si tu le vides ou changes de téléphone, tes abonnements disparaissent : garde une copie."
+      intro="Tes abonnements restent dans ce navigateur, rien n’est envoyé. Si tu le vides ou changes de téléphone, tes abonnements disparaissent : garde une copie."
     >
       {!stockageOk && (
         <p className="mt-3 rounded-2xl bg-pause/12 p-4 text-[0.9375rem] font-medium text-pause">

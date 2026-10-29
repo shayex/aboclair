@@ -7,7 +7,13 @@ export function PiedDePage() {
       <ul className="mt-2 flex flex-col gap-1">
         <li>Prix indicatifs (octobre 2026), à vérifier sur tes relevés.</li>
         <li>Information, pas conseil juridique.</li>
-        <li>Aucun compte, aucun cookie : tes données restent dans ton navigateur.</li>
+        <li>Aucun compte, aucun cookie : tes abonnements restent dans ton navigateur.</li>
+        {import.meta.env.VITE_UMAMI_WEBSITE_ID && (
+          <li>
+            Une mesure d’audience anonyme (Umami, sans cookie) compte les visites et les étapes atteintes, jamais
+            tes abonnements ni tes montants.
+          </li>
+        )}
         <li>AboClair n’est lié à aucun des services cités. Les noms appartiennent à leurs propriétaires.</li>
         <li>
           <a href={`${import.meta.env.BASE_URL}resilier/`} className="font-medium text-accent underline underline-offset-2">

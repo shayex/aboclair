@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
-import { useId } from 'react'
+import { useEffect, useId, useRef } from 'react'
+import { suivre } from '../lib/audience'
 import type { Totaux } from '../lib/calculs'
 import { formaterEuros } from '../lib/format'
 import { MOYENNE_FRANCAISE, type Comparaison } from '../lib/moyenne'
@@ -20,8 +21,18 @@ export function TableauDeBord({
   economieFaite: number
 }) {
   const idTitre = useId()
+  const ref = useRef<HTMLElement>(null)
+
+  // Indicateur clé : la part des visiteurs qui voient leur total.
+  useEffect(() => {
+    const el = ref.current
+    if (!el || nombre === 0) return
+    const obs = new IntersectionObserver(([e]) => e.isIntersecting && suivre('bilan-vu', true), { threshold: 0.5 })
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [nombre > 0])
   return (
-    <section id={ID_BILAN} aria-labelledby={idTitre} className="mt-12 scroll-mt-6">
+    <section ref={ref} id={ID_BILAN} aria-labelledby={idTitre} className="mt-12 scroll-mt-6">
       <h2 id={idTitre} tabIndex={-1} className="text-[1.375rem] outline-none font-semibold leading-tight tracking-[-0.015em]">
         Ton bilan
       </h2>

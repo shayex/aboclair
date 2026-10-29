@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { suivre } from '../lib/audience'
 import { formaterDate } from '../lib/format'
 import { genererIcs, nomFichierIcs, rappelsPour } from '../lib/ics'
 import { telecharger } from '../lib/telechargement'
@@ -21,6 +22,7 @@ export function BoutonRappel({ abonnement, aujourdhui }: { abonnement: Abonnemen
   function ajouter() {
     telecharger(nomFichierIcs(abonnement.nom), genererIcs(rappels), 'text/calendar;charset=utf-8')
     setFait(true)
+    suivre('rappel-ajoute')
   }
 
   return (

@@ -20,7 +20,7 @@ export function EnTete() {
       <p className="mt-4 flex items-start gap-2 text-sm text-texte-2">
         <IconeBouclier className="mt-0.5 shrink-0 text-base text-garder" />
         <span>
-          Sans compte. Sans banque. Tes données restent dans ce navigateur, rien n’est envoyé.
+          Sans compte. Sans banque. Tes abonnements restent dans ce navigateur, rien n’est envoyé.
         </span>
       </p>
     </header>

@@ -16,6 +16,7 @@ import { Panneau } from './components/ui/Panneau'
 import { totaux as calculerTotaux } from './lib/calculs'
 import { prixCatalogueCentimes, trouverMarque, trouverService, type Marque } from './lib/catalogue'
 import { aujourdhuiIso } from './lib/dates'
+import { suivre } from './lib/audience'
 import { comparerMoyenne } from './lib/moyenne'
 import { construirePlan } from './lib/verdict'
 import { depuisCatalogue, nouvelId, useAbonnements } from './state/useAbonnements'
@@ -58,12 +59,22 @@ export function App() {
     const existant = choix.get(m.nom)
     if (m.offres.length > 1) setPanneau({ type: 'offres', marque: m.nom })
     else if (existant) gestion.supprimer(existant.id)
-    else gestion.ajouter(depuisCatalogue(m.offres[0]))
+    else ajouter(depuisCatalogue(m.offres[0]))
+  }
+
+  function ajouter(a: Abonnement) {
+    gestion.ajouter(a)
+    suivre('abonnement-ajoute', true)
+  }
+
+  function ouvrirResiliation(id: string, depuisFiche: boolean) {
+    setPanneau({ type: 'resilier', id, depuisFiche })
+    suivre('resiliation-ouverte')
   }
 
   function choisirOffre(offre: ServiceCatalogue) {
     const existant = choix.get(offre.marque)
-    if (!existant) gestion.ajouter(depuisCatalogue(offre))
+    if (!existant) ajouter(depuisCatalogue(offre))
     else if (existant.serviceId !== offre.id) {
       // Changer d'offre garde les dates et le moyen de paiement, mais reprend le prix du catalogue.
       gestion.modifier(existant.id, {
@@ -107,7 +118,7 @@ export function App() {
                 type="button"
                 disabled={!pret}
                 onClick={() => {
-                  gestion.ajouter({ ...b, nom: b.nom.trim() })
+                  ajouter({ ...b, nom: b.nom.trim() })
                   setPanneau(null)
                 }}
                 className="appui mt-1 h-12 w-full rounded-2xl bg-accent text-base font-semibold text-accent-texte disabled:opacity-40"
@@ -180,7 +191,7 @@ export function App() {
               <BoutonRappel abonnement={enCours} aujourdhui={aujourdhuiIso()} />
               <button
                 type="button"
-                onClick={() => setPanneau({ type: 'resilier', id: enCours.id, depuisFiche: true })}
+                onClick={() => ouvrirResiliation(enCours.id, true)}
                 className={BOUTON_SECONDAIRE}
               >
                 Comment résilier
@@ -220,16 +231,26 @@ export function App() {
           comparaison={comparaison}
           economieFaite={plan.economieFaite}
         />
-        <Tri abonnements={abonnements} onUsage={(id, usage) => gestion.modifier(id, { usage })} />
+        <Tri
+          abonnements={abonnements}
+          onUsage={(id, usage) => {
+            gestion.modifier(id, { usage })
+            suivre('tri-commence', true)
+          }}
+        />
         <Plan
           plan={plan}
           nombre={abonnements.length}
-          onFait={(id, fait) => gestion.modifier(id, { faitLe: fait ? aujourdhuiIso() : undefined })}
+          onFait={(id, fait) => {
+            gestion.modifier(id, { faitLe: fait ? aujourdhuiIso() : undefined })
+            if (fait) suivre('action-faite')
+          }}
+          onPartage={() => suivre('carte-partagee')}
           actionPour={(id, verdict) =>
             verdict === 'partager' ? null : (
               <button
                 type="button"
-                onClick={() => setPanneau({ type: 'resilier', id, depuisFiche: false })}
+                onClick={() => ouvrirResiliation(id, false)}
                 className="appui h-9 shrink-0 rounded-full bg-surface-2 px-3.5 text-sm font-semibold"
               >
                 Résilier

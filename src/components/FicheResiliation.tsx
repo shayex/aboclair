@@ -1,3 +1,4 @@
+import { suivre } from '../lib/audience'
 import { CONSEIL_PREUVE, DROITS } from '../lib/droits'
 import { trouverMarque, trouverService } from '../lib/catalogue'
 import { formaterDate } from '../lib/format'
@@ -39,6 +40,7 @@ export function FicheResiliation({
             href={guide.lien.url}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => suivre('lien-resiliation')}
             className="appui mt-2 flex h-12 items-center justify-center gap-2 rounded-2xl bg-accent px-4 text-[0.9375rem] font-semibold text-accent-texte"
           >
             {guide.lien.libelle}
