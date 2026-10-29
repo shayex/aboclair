@@ -16,6 +16,7 @@ import { Panneau } from './components/ui/Panneau'
 import { totaux as calculerTotaux } from './lib/calculs'
 import { prixCatalogueCentimes, trouverMarque, trouverService, type Marque } from './lib/catalogue'
 import { aujourdhuiIso } from './lib/dates'
+import { comparerMoyenne } from './lib/moyenne'
 import { construirePlan } from './lib/verdict'
 import { depuisCatalogue, nouvelId, useAbonnements } from './state/useAbonnements'
 import type { Abonnement, ServiceCatalogue } from './types'
@@ -50,6 +51,7 @@ export function App() {
   }, [abonnements])
   const totaux = useMemo(() => calculerTotaux(abonnements), [abonnements])
   const plan = useMemo(() => construirePlan(abonnements), [abonnements])
+  const comparaison = useMemo(() => comparerMoyenne(abonnements), [abonnements])
 
   /** Une seule offre : on coche ou décoche. Plusieurs offres : on ouvre le choix. */
   function toucherMarque(m: Marque) {
@@ -212,7 +214,7 @@ export function App() {
           onOuvrir={(id) => setPanneau({ type: 'modifier', id })}
           onNouveau={() => setPanneau({ type: 'nouveau', brouillon: brouillonVide() })}
         />
-        <TableauDeBord totaux={totaux} nombre={abonnements.length} />
+        <TableauDeBord totaux={totaux} nombre={abonnements.length} comparaison={comparaison} />
         <Tri abonnements={abonnements} onUsage={(id, usage) => gestion.modifier(id, { usage })} />
         <Plan
           plan={plan}
