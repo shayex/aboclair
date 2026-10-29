@@ -14,7 +14,7 @@
   --pause: #935600;
   --couper: #c0292b;
   --partager: #6b3fc8;
-  --verre: rgb(255 255 255 / 0.72);
+  --verre: rgb(255 255 255 / 0.86);
   color-scheme: light;
 }
 
@@ -32,7 +32,7 @@
     --pause: #f2b453;
     --couper: #ff8078;
     --partager: #b9a0ff;
-    --verre: rgb(23 25 30 / 0.72);
+    --verre: rgb(23 25 30 / 0.86);
     color-scheme: dark;
   }
 }
@@ -106,8 +106,8 @@ textarea {
 /* Matériau translucide pour les barres flottantes. */
 .verre {
   background: var(--verre);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
 }
 
 @media (prefers-reduced-transparency: reduce) {

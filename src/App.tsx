@@ -1,9 +1,12 @@
 import { useMemo, useState } from 'react'
+import { BarreTotal } from './components/BarreTotal'
 import { Catalogue } from './components/Catalogue'
 import { EnTete } from './components/EnTete'
 import { FormulaireAbonnement } from './components/FormulaireAbonnement'
 import { ListeAbonnements } from './components/ListeAbonnements'
+import { TableauDeBord } from './components/TableauDeBord'
 import { Panneau } from './components/ui/Panneau'
+import { totaux as calculerTotaux } from './lib/calculs'
 import { trouverService } from './lib/catalogue'
 import { depuisCatalogue, nouvelId, useAbonnements } from './state/useAbonnements'
 import type { Abonnement, ServiceCatalogue } from './types'
@@ -32,6 +35,8 @@ export function App() {
     if (existant) gestion.supprimer(existant.id)
     else gestion.ajouter(depuisCatalogue(service))
   }
+
+  const totaux = useMemo(() => calculerTotaux(abonnements), [abonnements])
 
   const enCours = panneau?.type === 'modifier' ? abonnements.find((a) => a.id === panneau.id) : undefined
 
@@ -111,7 +116,9 @@ export function App() {
           onOuvrir={(id) => setPanneau({ type: 'modifier', id })}
           onNouveau={() => setPanneau({ type: 'nouveau', brouillon: brouillonVide() })}
         />
+        <TableauDeBord totaux={totaux} nombre={abonnements.length} />
       </main>
+      <BarreTotal totaux={totaux} nombre={abonnements.length} />
       <Panneau ouvert={contenu !== null} onFermer={fermer} titre={contenu?.titre ?? ''}>
         {contenu?.corps}
       </Panneau>
