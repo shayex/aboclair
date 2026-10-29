@@ -6,7 +6,7 @@
     "prixMensuelIndicatif": 7.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.netflix.com/cancelplan",
-    "noteResiliation": "Compte → Abonnement → Annuler l'abonnement. Tu gardes l'accès jusqu'à la fin de la période payée.",
+    "noteResiliation": "Compte → Abonnement → Annuler l’abonnement. Tu gardes l’accès jusqu’à la fin de la période payée.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": true
   },
@@ -17,7 +17,7 @@
     "prixMensuelIndicatif": 14.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.netflix.com/cancelplan",
-    "noteResiliation": "Compte → Abonnement → Annuler l'abonnement. Tu gardes l'accès jusqu'à la fin de la période payée.",
+    "noteResiliation": "Compte → Abonnement → Annuler l’abonnement. Tu gardes l’accès jusqu’à la fin de la période payée.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": true
   },
@@ -28,7 +28,7 @@
     "prixMensuelIndicatif": 21.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.netflix.com/cancelplan",
-    "noteResiliation": "Compte → Abonnement → Annuler l'abonnement. Tu gardes l'accès jusqu'à la fin de la période payée.",
+    "noteResiliation": "Compte → Abonnement → Annuler l’abonnement. Tu gardes l’accès jusqu’à la fin de la période payée.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": true
   },
@@ -39,7 +39,7 @@
     "prixMensuelIndicatif": 6.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.amazon.fr/gp/primecentral",
-    "noteResiliation": "Votre compte → Prime → Gérer l'abonnement → Mettre fin à l'abonnement.",
+    "noteResiliation": "Votre compte → Prime → Gérer l’abonnement → Mettre fin à l’abonnement.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": true
   },
@@ -50,7 +50,7 @@
     "prixMensuelIndicatif": 9.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.disneyplus.com/account",
-    "noteResiliation": "Compte → Abonnement → Annuler l'abonnement.",
+    "noteResiliation": "Compte → Abonnement → Annuler l’abonnement.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -61,7 +61,7 @@
     "prixMensuelIndicatif": 27.99,
     "frequence": "mensuel",
     "urlResiliation": "https://client.canalplus.com/",
-    "noteResiliation": "Espace client → Mon abonnement. Souvent avec un engagement de 12 ou 24 mois : vérifie d'abord ta date de fin d'engagement.",
+    "noteResiliation": "Espace client → Mon abonnement. Souvent avec un engagement de 12 ou 24 mois : vérifie d’abord ta date de fin d’engagement.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -72,7 +72,7 @@
     "prixMensuelIndicatif": 9.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.hbomax.com/",
-    "noteResiliation": "Profil → Abonnement → Annuler l'abonnement.",
+    "noteResiliation": "Profil → Abonnement → Annuler l’abonnement.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -94,7 +94,7 @@
     "prixMensuelIndicatif": 7.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.paramountplus.com/fr/account/",
-    "noteResiliation": "Compte → Abonnement → Annuler l'abonnement.",
+    "noteResiliation": "Compte → Abonnement → Annuler l’abonnement.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -105,7 +105,7 @@
     "prixMensuelIndicatif": 6.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.crunchyroll.com/account/membership",
-    "noteResiliation": "Paramètres → Abonnement → Annuler l'abonnement.",
+    "noteResiliation": "Paramètres → Abonnement → Annuler l’abonnement.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -116,7 +116,7 @@
     "prixMensuelIndicatif": 12.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.youtube.com/paid_memberships",
-    "noteResiliation": "Abonnements payants → Gérer l'abonnement → Désactiver.",
+    "noteResiliation": "Abonnements payants → Gérer l’abonnement → Désactiver.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": true
   },
@@ -160,7 +160,7 @@
     "prixMensuelIndicatif": 11.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.amazon.fr/music/settings",
-    "noteResiliation": "Paramètres Amazon Music → Abonnement → Annuler l'abonnement.",
+    "noteResiliation": "Paramètres Amazon Music → Abonnement → Annuler l’abonnement.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": true
   },
@@ -171,7 +171,7 @@
     "prixMensuelIndicatif": 10.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.youtube.com/paid_memberships",
-    "noteResiliation": "Abonnements payants → Gérer l'abonnement → Désactiver.",
+    "noteResiliation": "Abonnements payants → Gérer l’abonnement → Désactiver.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": true
   },
@@ -193,7 +193,7 @@
     "prixMensuelIndicatif": 9.95,
     "frequence": "mensuel",
     "urlResiliation": "https://www.audible.fr/account/overview",
-    "noteResiliation": "Compte → Détails de l'abonnement → Annuler l'abonnement. Utilise tes crédits avant : ils sont perdus à la résiliation.",
+    "noteResiliation": "Compte → Détails de l’abonnement → Annuler l’abonnement. Utilise tes crédits avant : ils sont perdus à la résiliation.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -204,7 +204,7 @@
     "prixMensuelIndicatif": 23,
     "frequence": "mensuel",
     "urlResiliation": "https://chatgpt.com/#settings/Subscription",
-    "noteResiliation": "Paramètres → Compte → Gérer l'abonnement → Annuler l'abonnement.",
+    "noteResiliation": "Paramètres → Compte → Gérer l’abonnement → Annuler l’abonnement.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -215,7 +215,7 @@
     "prixMensuelIndicatif": 21.6,
     "frequence": "mensuel",
     "urlResiliation": "https://claude.ai/settings/billing",
-    "noteResiliation": "Paramètres → Facturation → Annuler l'abonnement.",
+    "noteResiliation": "Paramètres → Facturation → Annuler l’abonnement.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -226,7 +226,7 @@
     "prixMensuelIndicatif": 21.99,
     "frequence": "mensuel",
     "urlResiliation": "https://one.google.com/settings",
-    "noteResiliation": "Google One → Paramètres → Gérer l'abonnement → Résilier.",
+    "noteResiliation": "Google One → Paramètres → Gérer l’abonnement → Résilier.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": true
   },
@@ -248,7 +248,7 @@
     "prixMensuelIndicatif": 22,
     "frequence": "mensuel",
     "urlResiliation": "https://www.perplexity.ai/settings/account",
-    "noteResiliation": "Paramètres → Compte → Gérer l'abonnement → Annuler.",
+    "noteResiliation": "Paramètres → Compte → Gérer l’abonnement → Annuler.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -259,7 +259,7 @@
     "prixMensuelIndicatif": 29.99,
     "frequence": "mensuel",
     "urlResiliation": "https://my.basic-fit.com/",
-    "noteResiliation": "Espace membre → Mon abonnement → Résilier. Basic-Fit prélève toutes les 4 semaines (13 fois par an) et un préavis peut s'appliquer.",
+    "noteResiliation": "Espace membre → Mon abonnement → Résilier. Basic-Fit prélève toutes les 4 semaines (13 fois par an) et un préavis peut s’appliquer.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -270,7 +270,7 @@
     "prixMensuelIndicatif": 29.95,
     "frequence": "mensuel",
     "urlResiliation": "https://www.fitnesspark.fr/",
-    "noteResiliation": "Espace adhérent ou accueil du club. Vérifie ta date de fin d'engagement, souvent 12 mois.",
+    "noteResiliation": "Espace adhérent ou accueil du club. Vérifie ta date de fin d’engagement, souvent 12 mois.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -281,7 +281,7 @@
     "prixMensuelIndicatif": 11.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.strava.com/account",
-    "noteResiliation": "Paramètres → Mon compte → Gérer l'abonnement → Annuler.",
+    "noteResiliation": "Paramètres → Mon compte → Gérer l’abonnement → Annuler.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": true
   },
@@ -353,7 +353,7 @@
   },
   {
     "id": "lequipe",
-    "nom": "L'Équipe (numérique)",
+    "nom": "L’Équipe (numérique)",
     "categorie": "presse",
     "prixMensuelIndicatif": 9.99,
     "frequence": "mensuel",
@@ -380,7 +380,7 @@
     "prixMensuelIndicatif": 9.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.amazon.fr/kindle-dbs/ku/ku-central",
-    "noteResiliation": "Votre abonnement Kindle Unlimited → Annuler l'abonnement.",
+    "noteResiliation": "Votre abonnement Kindle Unlimited → Annuler l’abonnement.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -403,7 +403,7 @@
     "prixMensuelIndicatif": 26.99,
     "frequence": "mensuel",
     "urlResiliation": "https://account.microsoft.com/services",
-    "noteResiliation": "Compte Microsoft → Services et abonnements → Gérer → Annuler l'abonnement.",
+    "noteResiliation": "Compte Microsoft → Services et abonnements → Gérer → Annuler l’abonnement.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -448,7 +448,7 @@
     "prixMensuelIndicatif": 7.99,
     "frequence": "mensuel",
     "urlResiliation": "https://store.ubisoft.com/",
-    "noteResiliation": "Compte Ubisoft → Abonnements → Annuler l'abonnement.",
+    "noteResiliation": "Compte Ubisoft → Abonnements → Annuler l’abonnement.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -481,7 +481,7 @@
     "prixMensuelIndicatif": 1.99,
     "frequence": "mensuel",
     "urlResiliation": "https://one.google.com/settings",
-    "noteResiliation": "Google One → Paramètres → Gérer l'abonnement → Résilier.",
+    "noteResiliation": "Google One → Paramètres → Gérer l’abonnement → Résilier.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": true
   },
@@ -492,7 +492,7 @@
     "prixMensuelIndicatif": 9.99,
     "frequence": "mensuel",
     "urlResiliation": "https://one.google.com/settings",
-    "noteResiliation": "Google One → Paramètres → Gérer l'abonnement → Résilier.",
+    "noteResiliation": "Google One → Paramètres → Gérer l’abonnement → Résilier.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": true
   },
@@ -504,7 +504,7 @@
     "prixAnnuelIndicatif": 99,
     "frequence": "annuel",
     "urlResiliation": "https://account.microsoft.com/services",
-    "noteResiliation": "Compte Microsoft → Services et abonnements → Gérer → Annuler l'abonnement.",
+    "noteResiliation": "Compte Microsoft → Services et abonnements → Gérer → Annuler l’abonnement.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": true
   },
@@ -526,7 +526,7 @@
     "prixMensuelIndicatif": 39.99,
     "frequence": "mensuel",
     "urlResiliation": "https://subscribe.free.fr/login/",
-    "noteResiliation": "Si tu changes d'opérateur en gardant ton numéro fixe, le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client. Des frais de résiliation peuvent s'appliquer.",
+    "noteResiliation": "Si tu changes d’opérateur en gardant ton numéro fixe, le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client. Des frais de résiliation peuvent s’appliquer.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -537,7 +537,7 @@
     "prixMensuelIndicatif": 42.99,
     "frequence": "mensuel",
     "urlResiliation": "https://espace-client.orange.fr/",
-    "noteResiliation": "Si tu changes d'opérateur en gardant ton numéro fixe, le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client. Des frais de résiliation peuvent s'appliquer.",
+    "noteResiliation": "Si tu changes d’opérateur en gardant ton numéro fixe, le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client. Des frais de résiliation peuvent s’appliquer.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -548,7 +548,7 @@
     "prixMensuelIndicatif": 35,
     "frequence": "mensuel",
     "urlResiliation": "https://www.sfr.fr/mon-espace-client/",
-    "noteResiliation": "Si tu changes d'opérateur en gardant ton numéro fixe, le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client. Des frais de résiliation peuvent s'appliquer.",
+    "noteResiliation": "Si tu changes d’opérateur en gardant ton numéro fixe, le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client. Des frais de résiliation peuvent s’appliquer.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -559,7 +559,7 @@
     "prixMensuelIndicatif": 32.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.bouyguestelecom.fr/mon-compte",
-    "noteResiliation": "Si tu changes d'opérateur en gardant ton numéro fixe, le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client. Des frais de résiliation peuvent s'appliquer.",
+    "noteResiliation": "Si tu changes d’opérateur en gardant ton numéro fixe, le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client. Des frais de résiliation peuvent s’appliquer.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -570,7 +570,7 @@
     "prixMensuelIndicatif": 19.99,
     "frequence": "mensuel",
     "urlResiliation": "https://mobile.free.fr/account/",
-    "noteResiliation": "Pour changer d'opérateur, appelle le 3179 pour obtenir ton RIO : le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client.",
+    "noteResiliation": "Pour changer d’opérateur, appelle le 3179 pour obtenir ton RIO : le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -581,7 +581,7 @@
     "prixMensuelIndicatif": 15.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.sosh.fr/",
-    "noteResiliation": "Pour changer d'opérateur, appelle le 3179 pour obtenir ton RIO : le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client.",
+    "noteResiliation": "Pour changer d’opérateur, appelle le 3179 pour obtenir ton RIO : le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -592,7 +592,7 @@
     "prixMensuelIndicatif": 12.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.red-by-sfr.fr/mon-espace-client/",
-    "noteResiliation": "Pour changer d'opérateur, appelle le 3179 pour obtenir ton RIO : le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client.",
+    "noteResiliation": "Pour changer d’opérateur, appelle le 3179 pour obtenir ton RIO : le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   },
@@ -603,7 +603,7 @@
     "prixMensuelIndicatif": 11.99,
     "frequence": "mensuel",
     "urlResiliation": "https://www.bouyguestelecom.fr/mon-compte",
-    "noteResiliation": "Pour changer d'opérateur, appelle le 3179 pour obtenir ton RIO : le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client.",
+    "noteResiliation": "Pour changer d’opérateur, appelle le 3179 pour obtenir ton RIO : le nouvel opérateur résilie pour toi. Sinon, résilie depuis ton espace client.",
     "dateMiseAJourPrix": "2026-10-29",
     "partageable": false
   }

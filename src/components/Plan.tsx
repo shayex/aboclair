@@ -2,6 +2,7 @@ import { formaterEuros } from '../lib/format'
 import { VERDICTS } from '../lib/libelles'
 import type { Plan as DonneesPlan } from '../lib/verdict'
 import type { ReactNode } from 'react'
+import type { Verdict } from '../types'
 import { Montant } from './ui/Montant'
 import { PastilleVerdict, Section } from './ui/Section'
 
@@ -13,7 +14,7 @@ export function Plan({
   plan: DonneesPlan
   nombre: number
   /** Bouton d'action pour une ligne (résilier…), fourni par la page. */
-  actionPour?: (id: string) => ReactNode
+  actionPour?: (id: string, verdict: Verdict) => ReactNode
 }) {
   if (nombre === 0) return null
   const rienRepondu = plan.restants === nombre
@@ -59,7 +60,7 @@ export function Plan({
                       </span>
                     </p>
                   </div>
-                  {actionPour?.(a.id)}
+                  {actionPour?.(a.id, verdict)}
                 </li>
               ))}
             </ol>

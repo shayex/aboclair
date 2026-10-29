@@ -27,6 +27,7 @@ export function normaliser(texte: string): string {
   return texte
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
+    .replace(/[’‘]/g, "'")
     .toLowerCase()
     .trim()
 }
